@@ -253,6 +253,7 @@
          <xs:enumeration value="FraisRaccordPerm"/>
          <xs:enumeration value="FraisRemise"/>
          <xs:enumeration value="AjustementFinAnnee"/>
+         <xs:enumeration value="FraisMigration"/>
          <xs:enumeration value="CoutKwh"/>
          <xs:enumeration value="CoutKwh1E"/>
          <xs:enumeration value="CoutRedev"/>
