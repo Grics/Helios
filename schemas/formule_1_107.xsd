@@ -1,0 +1,301 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2009 sp1 (http://www.altova.com) by Francis Ouellet (SOCIETE GRICS) -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
+  <xs:element name="formules">
+    <xs:annotation>
+      <xs:documentation>Comment describing your root element</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:choice maxOccurs="unbounded">
+        <xs:element name="formule" maxOccurs="unbounded">
+          <xs:complexType>
+            <xs:choice maxOccurs="unbounded">
+              <xs:element name="elementInstallation" maxOccurs="unbounded">
+                <xs:complexType>
+                  <xs:simpleContent>
+                    <xs:extension base="TypeElementInstallation">
+                      <xs:attribute name="descr" type="xs:string"/>
+                    </xs:extension>
+                  </xs:simpleContent>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="elementSousGrilleTarifaire" maxOccurs="unbounded">
+                <xs:complexType>
+                  <xs:simpleContent>
+                    <xs:extension base="NomSousGrilleTarifaire">
+                      <xs:attribute name="descr" type="xs:string"/>
+                    </xs:extension>
+                  </xs:simpleContent>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="elementFacture" maxOccurs="unbounded">
+                <xs:complexType>
+                  <xs:simpleContent>
+                    <xs:extension base="TypeElementFacture">
+                      <xs:attribute name="descr" type="xs:string"/>
+                    </xs:extension>
+                  </xs:simpleContent>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="elementContractuel" maxOccurs="unbounded">
+                <xs:complexType>
+                  <xs:simpleContent>
+                    <xs:extension base="TypeElementContractuel">
+                      <xs:attribute name="descr" type="xs:string"/>
+                    </xs:extension>
+                  </xs:simpleContent>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="sorties" maxOccurs="unbounded">
+                <xs:complexType>
+                  <xs:choice maxOccurs="unbounded">
+                    <xs:element name="sortie" maxOccurs="unbounded">
+                      <xs:complexType>
+                        <xs:simpleContent>
+                          <xs:extension base="TypeSortie">
+                            <xs:attribute name="descr" type="xs:string"/>
+                          </xs:extension>
+                        </xs:simpleContent>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:choice>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="elementInventaire" maxOccurs="unbounded">
+                <xs:complexType>
+                  <xs:simpleContent>
+                    <xs:extension base="TypeElementInventaire">
+                      <xs:attribute name="descr" type="xs:string"/>
+                    </xs:extension>
+                  </xs:simpleContent>
+                </xs:complexType>
+              </xs:element>
+            </xs:choice>
+            <xs:attribute name="name" use="required"/>
+            <xs:attribute name="classe" type="Classes" use="required"/>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+    <xs:unique name="formuleUnique">
+      <xs:selector xpath="formule"/>
+      <xs:field xpath="@name"/>
+    </xs:unique>
+  </xs:element>
+  <xs:simpleType name="TypeElementInstallation" final="list">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="UniteMesure"/>
+      <xs:enumeration value="UniteMonetaire"/>
+      <xs:enumeration value="VolumeReservoir"/>
+      <xs:enumeration value="NumeroPermis"/>
+      <xs:enumeration value="CapaciteNominale"/>
+      <xs:enumeration value="NbrPhase"/>
+      <xs:enumeration value="TensionAlimentation"/>
+      <xs:enumeration value="RabaisTransformation"/>
+      <xs:enumeration value="RabaisMesurage"/>
+      <xs:enumeration value="PuissanceInstallee"/>
+      <xs:enumeration value="MultiplicateurConsommation"/>
+      <xs:enumeration value="MultiplicateurPuissance"/>
+      <xs:enumeration value="FacteurCompression"/>
+      <xs:enumeration value="ReseauAutonome53Parallele"/>
+      <xs:enumeration value="NbrCompteurs"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="TypeElementFacture">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="NonDefini"/>
+      <xs:enumeration value="Consommation"/>
+      <xs:enumeration value="PuissanceReelle"/>
+      <xs:enumeration value="PuissanceApparente"/>
+      <xs:enumeration value="PuissanceAppelee"/>
+      <xs:enumeration value="PuissanceInstallee"/>
+      <xs:enumeration value="PuissanceSouscrite"/>
+      <xs:enumeration value="PuissanceMinimale"/>
+      <xs:enumeration value="FacteurPuissance"/>
+      <xs:enumeration value="FacteurUtilisation"/>
+      <xs:enumeration value="PrixUnitaire"/>
+      <xs:enumeration value="Cout"/>
+      <xs:enumeration value="AutreOuiNon"/>
+      <xs:enumeration value="NumeroLivraison"/>
+      <xs:enumeration value="VolumeLivre"/>
+      <xs:enumeration value="VolumeContractuel"/>
+      <xs:enumeration value="ReservoirPlein"/>
+      <xs:enumeration value="PuissanceContractuelle"/>
+      <xs:enumeration value="PrixFourniture"/>
+      <xs:enumeration value="PrixGazCompression"/>
+      <xs:enumeration value="Transport"/>
+      <xs:enumeration value="Equilibrage"/>
+      <xs:enumeration value="Inventaire"/>
+      <xs:enumeration value="VolumeSouscritJournalier"/>
+      <xs:enumeration value="ExcedentVolumeSouscrit"/>
+      <xs:enumeration value="RetraitsInterdits"/>
+      <xs:enumeration value="Ajustement"/>
+      <xs:enumeration value="DepassementsQuotidiens"/>
+      <xs:enumeration value="ConsommationDouzeDerniersMois"/>
+      <xs:enumeration value="Consommation1Hrs"/>
+      <xs:enumeration value="ConsommationPointe"/>
+      <xs:enumeration value="AchatGazAppoint"/>
+      <xs:enumeration value="AchatRetraitInterdit"/>
+      <xs:enumeration value="GazDeCompression"/>
+      <xs:enumeration value="AchatRachatSupplementaires"/>
+      <xs:enumeration value="Information"/>
+      <xs:enumeration value="PrixSpede"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="TypeElementContractuel">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Aucun"/>
+      <xs:enumeration value="PuissanceMinimale"/>
+      <xs:enumeration value="PuissanceSouscrite"/>
+      <xs:enumeration value="NombreLogements"/>
+      <xs:enumeration value="ObligationMinimaleAnnuelle"/>
+      <xs:enumeration value="VolumeAnnuelEstimatif"/>
+      <xs:enumeration value="FacteurUtilisationOma"/>
+      <xs:enumeration value="TermeContrat"/>
+      <xs:enumeration value="RabaisConcurrence"/>
+      <xs:enumeration value="RabaisTransitoire"/>
+      <xs:enumeration value="AbonnementCourteDuree"/>
+      <xs:enumeration value="ObligationMinimaleQuotidienne"/>
+      <xs:enumeration value="PourcentageOma"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="NomSousGrilleTarifaire">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="RajustementPerteTransformation"/>
+      <xs:enumeration value="CreditAlimentation"/>
+      <xs:enumeration value="RedevanceAbonnement"/>
+      <xs:enumeration value="CoutEnergie"/>
+      <xs:enumeration value="CoutEnergieReseauAutonome"/>
+      <xs:enumeration value="ExcedentReseauAutonome"/>
+      <xs:enumeration value="PrimePuissance"/>
+      <xs:enumeration value="RabaisTransformation"/>
+      <xs:enumeration value="TauxUnitVolumeRetire"/>
+      <xs:enumeration value="FraisBase"/>
+      <xs:enumeration value="MinimumTriphasee"/>
+      <xs:enumeration value="MinimumMonophasee"/>
+      <xs:enumeration value="MajorationMauvaisFacteurPuissance"/>
+      <xs:enumeration value="MajorationMinimalCourteDuree"/>
+      <xs:enumeration value="MajorationPrimePuissHiverCourteDuree"/>
+      <xs:enumeration value="ReductionDureeContrat"/>
+      <xs:enumeration value="ObligationMinimaleQuotidienne"/>
+      <xs:enumeration value="RetraitsInterdits"/>
+      <xs:enumeration value="RetraitsExcedantVolumeSouscrit"/>
+      <xs:enumeration value="ContributionFondsVert"/>
+      <xs:enumeration value="SupplementServicePointeDomestique"/>
+      <xs:enumeration value="SupplementServicePointeAutre"/>
+      <xs:enumeration value="CoutEnergie1Hrs"/>
+      <xs:enumeration value="CoutEnergiePointe"/>
+      <xs:enumeration value="RedevanceAbonnementkW"/>
+      <xs:enumeration value="ObligationMinimaleMensuelle"/>
+      <xs:enumeration value="PrixDistribution"/>
+      <xs:enumeration value="PrimeDepassementQuotidien"/> 
+      <xs:enumeration value="PrimeDepassementMensuel"/>
+      <xs:enumeration value="PrimeDepassementHiver"/>
+      <xs:enumeration value="ReductionOma"/>
+      <xs:enumeration value="Circuits"/>
+      <xs:enumeration value="Poteaux"/>
+      <xs:enumeration value="LumVSHP1440"/>
+      <xs:enumeration value="LumVSHP2200"/>
+      <xs:enumeration value="LumVSHP500"/>
+      <xs:enumeration value="LumVSHP850"/>
+      <xs:enumeration value="LumSentinelleAvecPoteau2000"/>
+      <xs:enumeration value="LumSentinelleAvecPoteau700"/>
+      <xs:enumeration value="LumSentinelleSansPoteau2000"/>
+      <xs:enumeration value="LumSentinelleSansPoteau700"/>
+      <xs:enumeration value="LumDel610"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="Classes">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="HQ.TarifBT"/>
+      <xs:enumeration value="HQ.TarifD"/>
+      <xs:enumeration value="HQ.TarifDM"/>
+      <xs:enumeration value="HQ.TarifG"/>
+      <xs:enumeration value="HQ.TarifG9"/>
+      <xs:enumeration value="HQ.TarifM"/>
+      <xs:enumeration value="HQ.TarifT3"/>
+      <xs:enumeration value="HQ.TarifECM"/>
+      <xs:enumeration value="HQ.TarifL"/>
+      <xs:enumeration value="HQ.TarifEVP"/>
+      <xs:enumeration value="GazMetro.TarifD1"/>
+      <xs:enumeration value="GazMetro.TarifD3"/>
+      <xs:enumeration value="GazMetro.TarifD5"/>
+      <xs:enumeration value="Gazifere.Tarif1Et2"/>
+      <xs:enumeration value="Defaults.TarifUnitaire"/>
+      <xs:enumeration value="Defaults.TarifGarRpt"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="TypeElementInventaire">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Circuits"/>
+      <xs:enumeration value="Poteaux"/>
+      <xs:enumeration value="LumVSHP1440"/>
+      <xs:enumeration value="LumVSHP2200"/>
+      <xs:enumeration value="LumVSHP500"/>
+      <xs:enumeration value="LumVSHP850"/>
+      <xs:enumeration value="LumSentinelleAvecPoteau2000"/>
+      <xs:enumeration value="LumSentinelleAvecPoteau700"/>
+      <xs:enumeration value="LumSentinelleSansPoteau2000"/>
+      <xs:enumeration value="LumSentinelleSansPoteau700"/>
+      <xs:enumeration value="LumDel610"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="TypeSortie" final="list">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Redevance"/>
+      <xs:enumeration value="PremiereTranche"/>
+      <xs:enumeration value="ResteConsommation"/>
+      <xs:enumeration value="Puissances"/>
+      <xs:enumeration value="CreditsMesurage"/>
+      <xs:enumeration value="CreditsHauteTension"/>
+      <xs:enumeration value="MauvaisFacteurs"/>
+      <xs:enumeration value="PuissanceHiver"/>
+      <xs:enumeration value="Consommation"/>
+      <xs:enumeration value="CoutGazNaturel"/>
+      <xs:enumeration value="CoutGazCompression"/>
+      <xs:enumeration value="CoutAchatRachat"/>
+      <xs:enumeration value="CoutFraisGestion"/>
+      <xs:enumeration value="CoutDistribution"/>
+      <xs:enumeration value="CoutFourniture"/>
+      <xs:enumeration value="CoutTransport"/>
+      <xs:enumeration value="FondVert"/>
+      <xs:enumeration value="Ajustement"/>
+      <xs:enumeration value="CreditPerteTransformations"/>
+      <xs:enumeration value="MinimumMonoPoly"/>
+      <xs:enumeration value="MinimumMensuel"/>
+      <xs:enumeration value="FraisBase"/>
+      <xs:enumeration value="RabaisConcurrence"/>
+      <xs:enumeration value="RabaisTransitoire"/>
+      <xs:enumeration value="PrixFourniture"/>
+      <xs:enumeration value="PrixTransport"/>
+      <xs:enumeration value="PrixEquilibrage"/>
+      <xs:enumeration value="PrixInventaire"/>
+      <xs:enumeration value="PrixGazCompression"/>
+      <xs:enumeration value="CoutEcretement"/>
+      <xs:enumeration value="RabaisTermeContrat"/>
+      <xs:enumeration value="OMQ"/>
+      <xs:enumeration value="CoutUnitaireDistribution"/>
+      <xs:enumeration value="CoutRetraitInterdit"/>
+      <xs:enumeration value="RabaisOMA"/>
+      <xs:enumeration value="AchatGazAppoint"/>
+      <xs:enumeration value="AchatRetraitInterdit"/>
+      <xs:enumeration value="TauxUnitaireVolumeRetire"/>
+      <xs:enumeration value="creditMesurageMauvaisFP"/>
+      <xs:enumeration value="creditAlimentationMauvaisFP"/>
+      <xs:enumeration value="creditsMesurageFP"/>
+      <xs:enumeration value="creditsHauteTensionFP"/>
+      <xs:enumeration value="Spede"/>
+      <xs:enumeration value="PrixLumForfaitCircuits"/>
+      <xs:enumeration value="PrixLumForfaitPoteaux"/>
+      <xs:enumeration value="PrixLumForfaitLumVSHP1440"/>
+      <xs:enumeration value="PrixLumForfaitLumVSHP2200"/>
+      <xs:enumeration value="PrixLumForfaitLumVSHP500"/>
+      <xs:enumeration value="PrixLumForfaitLumVSHP850"/>
+      <xs:enumeration value="PrixLumForfaitLumSentinelleAvecPoteau2000"/>
+      <xs:enumeration value="PrixLumForfaitLumSentinelleAvecPoteau700"/>
+      <xs:enumeration value="PrixLumForfaitLumSentinelleSansPoteau2000"/>
+      <xs:enumeration value="PrixLumForfaitLumSentinelleSansPoteau700"/>
+      <xs:enumeration value="PrixLumForfaitLumDel610"/>
+    </xs:restriction>
+  </xs:simpleType>
+</xs:schema>
