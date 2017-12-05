@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2009 sp1 (http://www.altova.com) by Francis Ouellet (SOCIETE GRICS) -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
+  <xs:element name="tarif">
+    <xs:annotation>
+      <xs:documentation>Classe de définition des tarifs pour le calcul dans Matlab</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:choice>
+        <xs:element name="version" maxOccurs="unbounded">
+          <xs:complexType>
+            <xs:all>
+              <xs:element name="saisons" minOccurs="0">
+                <xs:complexType>
+                  <xs:choice>
+                    <xs:element name="saison" minOccurs="0" maxOccurs="unbounded">
+                      <xs:complexType>
+                        <xs:attribute name="name" type="NomSaison" use="required"/>
+                        <xs:attribute name="jourDebut" use="required">
+                          <xs:simpleType>
+                            <xs:restriction base="xs:int">
+                              <xs:minInclusive value="1"/>
+                              <xs:maxInclusive value="31"/>
+                            </xs:restriction>
+                          </xs:simpleType>
+                        </xs:attribute>
+                        <xs:attribute name="moisDebut" use="required">
+                          <xs:simpleType>
+                            <xs:restriction base="xs:int">
+                              <xs:minInclusive value="1"/>
+                              <xs:maxInclusive value="12"/>
+                            </xs:restriction>
+                          </xs:simpleType>
+                        </xs:attribute>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:choice>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="revisions" minOccurs="0">
+                <xs:complexType>
+                  <xs:choice>
+                    <xs:element name="revision" maxOccurs="unbounded">
+                      <xs:complexType>
+                        <xs:choice>
+                          <xs:element name="grille" maxOccurs="unbounded">
+                            <xs:complexType>
+                              <xs:choice>
+                                <xs:element name="tranche" maxOccurs="unbounded">
+                                  <xs:complexType>
+                                    <xs:choice>
+                                      <xs:element name="valeurTranche" maxOccurs="unbounded">
+                                        <xs:complexType>
+                                          <xs:simpleContent>
+                                            <xs:extension base="xs:double">
+                                              <xs:attribute name="saison" type="NomSaison"/>
+                                            </xs:extension>
+                                          </xs:simpleContent>
+                                        </xs:complexType>
+                                      </xs:element>
+                                    </xs:choice>
+                                    <xs:attribute name="borneInf" type="xs:double" use="required"/>
+                                    <xs:attribute name="borneSup" type="xs:double"/>
+                                  </xs:complexType>
+                                </xs:element>
+                              </xs:choice>
+                              <xs:attribute name="name" type="NomSousGrilleTarifaire" use="required"/>
+                            </xs:complexType>
+                          </xs:element>
+                        </xs:choice>
+                        <xs:attribute name="date" type="xs:date" use="required"/>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:choice>
+                </xs:complexType>
+              </xs:element>
+            </xs:all>
+            <xs:attribute name="formule" type="xs:string" use="required"/>
+            <xs:attribute name="date" type="xs:date" use="required"/>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+      <xs:attribute name="code" type="CodeTarif" use="required"/>
+      <xs:attribute name="fournisseur" type="Fournisseur" use="required"/>
+    </xs:complexType>
+    <xs:key name="Saison">
+      <xs:selector xpath="version/saisons/saison"/>
+      <xs:field xpath="@name"/>
+    </xs:key>
+    <xs:keyref name="Saisons" refer="Saison">
+      <xs:selector xpath="version/revisions/revision/grille/tranche/valeurTranche"/>
+      <xs:field xpath="@saison"/>
+    </xs:keyref>
+  </xs:element>
+  <xs:simpleType name="NomSousGrilleTarifaire">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="RajustementPerteTransformation"/>
+      <xs:enumeration value="CreditAlimentation"/>
+      <xs:enumeration value="RedevanceAbonnement"/>
+      <xs:enumeration value="CoutEnergie"/>
+      <xs:enumeration value="CoutEnergieReseauAutonome"/>
+      <xs:enumeration value="ExcedentReseauAutonome"/>
+      <xs:enumeration value="PrimePuissance"/>
+      <xs:enumeration value="RabaisTransformation"/>
+      <xs:enumeration value="TauxUnitVolumeRetire"/>
+      <xs:enumeration value="FraisBase"/>
+      <xs:enumeration value="MinimumTriphasee"/>
+      <xs:enumeration value="MinimumMonophasee"/>
+      <xs:enumeration value="MajorationMauvaisFacteurPuissance"/>
+      <xs:enumeration value="MajorationMinimalCourteDuree"/>
+      <xs:enumeration value="MajorationPrimePuissHiverCourteDuree"/>
+      <xs:enumeration value="ReductionDureeContrat"/>
+      <xs:enumeration value="ObligationMinimaleQuotidienne"/>
+      <xs:enumeration value="RetraitsInterdits"/>
+      <xs:enumeration value="RetraitsExcedantVolumeSouscrit"/>
+      <xs:enumeration value="ContributionFondsVert"/>
+      <xs:enumeration value="SupplementServicePointeDomestique"/>
+      <xs:enumeration value="SupplementServicePointeAutre"/>
+      <xs:enumeration value="CoutEnergie1Hrs"/>
+      <xs:enumeration value="CoutEnergiePointe"/>
+      <xs:enumeration value="RedevanceAbonnementkW"/>
+      <xs:enumeration value="ObligationMinimaleMensuelle"/>
+      <xs:enumeration value="PrixDistribution"/>
+      <xs:enumeration value="PrimeDepassementQuotidien"/>
+      <xs:enumeration value="PrimeDepassementMensuel"/>
+      <xs:enumeration value="PrimeDepassementHiver"/>
+      <xs:enumeration value="TauxUnitaireDistribution"/>
+      <xs:enumeration value="ReductionOma"/>
+      <xs:enumeration value="Circuits"/>
+      <xs:enumeration value="Poteaux"/>
+      <xs:enumeration value="LumVSHP1440"/>
+      <xs:enumeration value="LumVSHP2200"/>
+      <xs:enumeration value="LumVSHP500"/>
+      <xs:enumeration value="LumVSHP850"/>
+      <xs:enumeration value="LumSentinelleAvecPoteau2000"/>
+      <xs:enumeration value="LumSentinelleSansPoteau2000"/>
+      <xs:enumeration value="LumSentinelleAvecPoteau700"/>
+      <xs:enumeration value="LumSentinelleSansPoteau700"/>
+      <xs:enumeration value="LumDel610"/>
+      <xs:enumeration value=""/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="Fournisseur">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="GM"/>
+      <xs:enumeration value="HQ"/>
+      <xs:enumeration value="GF"/>
+      <xs:enumeration value="Defaut"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="CodeTarif">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Unitaire"/>
+      <xs:enumeration value="Unitaire_Vrac"/>
+      <xs:enumeration value="Unitaire_Bois"/>
+      <xs:enumeration value="D1"/>
+      <xs:enumeration value="D3"/>
+      <xs:enumeration value="D4"/>
+      <xs:enumeration value="D5"/>
+      <xs:enumeration value="BT"/>
+      <xs:enumeration value="D"/>
+      <xs:enumeration value="DM"/>
+      <xs:enumeration value="G"/>
+      <xs:enumeration value="G9"/>
+      <xs:enumeration value="M"/>
+      <xs:enumeration value="T3"/>
+      <xs:enumeration value="ECM"/>
+      <xs:enumeration value="1"/>
+      <xs:enumeration value="2"/>
+      <xs:enumeration value="L"/>
+      <xs:enumeration value="GAR"/>
+      <xs:enumeration value="RPT"/>
+      <xs:enumeration value="LG"/>
+      <xs:enumeration value="EVP"/>
+      <xs:enumeration value="DN"/>
+      <xs:enumeration value="DP"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="NomSaison">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="été"/>
+      <xs:enumeration value="hiver"/>
+      <!--Correspondent au cl�s dans les ressources DetailFacture.resx-->
+      <!-- ATTENTION! Si une valeur est ajout�e ici, voir � ajuster l'�n�m�ration CodeSaison et la classe InfoSaisons dans le fichier InfoSaisons.cs (� la racine du projet). -->
+    </xs:restriction>
+  </xs:simpleType>
+</xs:schema>
