@@ -258,6 +258,7 @@
          <xs:enumeration value="CoutKwh1E"/>
          <xs:enumeration value="CoutRedev"/>
          <xs:enumeration value="CoutPuissFact"/>
+         <xs:enumeration value="CoutPuissFactExcedent"/>
          <xs:enumeration value="CoutKwh2E"/>
          <xs:enumeration value="CoutDepasse"/>
          <xs:enumeration value="CoutMinAlimPolyphase"/>
