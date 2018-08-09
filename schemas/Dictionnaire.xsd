@@ -3,9 +3,7 @@
   <xs:element name="Dictionnaire">
     <xs:complexType>
       <xs:all>
-        <xs:element ref="DetailFacture">
-          <xs:attribute name="Version" use="required">
-        </xs:element>
+        <xs:element ref="DetailFacture" />
         <xs:element ref="Tarifs" />
       </xs:all>
     </xs:complexType>
