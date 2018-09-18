@@ -140,6 +140,8 @@
       <xs:enumeration value="AchatRachatSupplementaires"/>
       <xs:enumeration value="Information"/>
       <xs:enumeration value="PrixSpede"/>
+      <xs:enumeration value="VolumeGazRenouvelable"/>
+      <xs:enumeration value="PrixGazRenouvelable"/>
     </xs:restriction>
   </xs:simpleType>
   <xs:simpleType name="TypeElementContractuel">
@@ -296,6 +298,7 @@
       <xs:enumeration value="PrixLumForfaitLumSentinelleSansPoteau2000"/>
       <xs:enumeration value="PrixLumForfaitLumSentinelleSansPoteau700"/>
       <xs:enumeration value="PrixLumForfaitLumDel610"/>
+      <xs:enumeration value="CoutGazRenouvelable"/>
     </xs:restriction>
   </xs:simpleType>
 </xs:schema>
