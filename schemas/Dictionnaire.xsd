@@ -313,6 +313,8 @@
       <xs:enumeration value="CoutCircuits" />
       <xs:enumeration value="NbrHeurUtilisation" />
       <xs:enumeration value="PrixSpede" />
+      <xs:enumeration value="VolumeGazRenouvelable" />
+      <xs:enumeration value="PrixGazRenouvelable" />
     </xs:restriction>
   </xs:simpleType>
   <xs:simpleType name="TypesElementContractuel">
