@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
   <xs:element name="Dictionnaire">
+    <xs:attribute name="Donnee" type="xs:string" />
+    <xs:attribute name="Type" type="xs:string" />
     <xs:complexType>
       <xs:all>
         <xs:element ref="Version" />
@@ -127,6 +129,7 @@
         <xs:element name="FraisAutre" type="xs:string" />
         <xs:element name="FraisAdmin" type="xs:string" />
         <xs:element name="GrandTotal" type="xs:string" />
+        <xs:element name="GrandTotalNet" type="xs:string" />
         <xs:element name="NombreJours" type="xs:string" />
         <xs:element name="NombreLogements" type="xs:string" />
         <xs:element name="Statut" type="xs:string" />
