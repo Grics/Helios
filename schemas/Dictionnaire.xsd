@@ -130,6 +130,8 @@
         <xs:element name="FraisAdmin" type="xs:string" />
         <xs:element name="GrandTotal" type="xs:string" />
         <xs:element name="GrandTotalNet" type="xs:string" />
+        <xs:element name="GrandTotalTps" type="xs:string" />
+        <xs:element name="GrandTotalTvq" type="xs:string" />
         <xs:element name="NombreJours" type="xs:string" />
         <xs:element name="NombreLogements" type="xs:string" />
         <xs:element name="Statut" type="xs:string" />
