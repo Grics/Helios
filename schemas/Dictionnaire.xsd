@@ -3,6 +3,11 @@
   <xs:element name="Dictionnaire">
     <xs:complexType>
       <xs:all>
+        <xs:element name="Version" type="xs:string">
+          <xs:annotation>
+            <xs:documentation>Version du fichier xml du fournisseur pour la récupération</xs:documentation>
+          </xs:annotation>
+        </xs:element>      
         <xs:element ref="DetailFacture" />
         <xs:element ref="Tarifs" />
       </xs:all>
