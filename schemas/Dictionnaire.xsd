@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
   <xs:element name="Dictionnaire">
-    <xs:attribute name="Donnee" type="xs:string" />
-    <xs:attribute name="Type" type="xs:string" />
     <xs:complexType>
       <xs:all>
         <xs:element ref="Version" />
@@ -101,6 +99,8 @@
         <xs:element minOccurs="0" ref="Techniques" />
       </xs:sequence>
       <xs:attribute name="Code" type="Tarifs" use="required" />
+      <xs:attribute name="Donnee" type="xs:string"/>
+      <xs:attribute name="Type" type="xs:string"/>
     </xs:complexType>
   </xs:element>
   <xs:element name="Montants">
