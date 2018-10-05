@@ -93,8 +93,6 @@
         <xs:element minOccurs="0" ref="Techniques" />
       </xs:sequence>
       <xs:attribute name="Code" type="Tarifs" use="required" />
-			<xs:attribute ref="Donnee"/>
-			<xs:attribute ref="Type"/>
     </xs:complexType>
   </xs:element>
   <xs:element name="Montants">
@@ -123,9 +121,6 @@
         <xs:element name="FraisAutre" type="xs:string" />
         <xs:element name="FraisAdmin" type="xs:string" />
         <xs:element name="GrandTotal" type="xs:string" />
-        <xs:element name="GrandTotalNet" type="xs:string" />
-        <xs:element name="GrandTotalTps" type="xs:string" />
-        <xs:element name="GrandTotalTvq" type="xs:string" />
         <xs:element name="NombreJours" type="xs:string" />
         <xs:element name="NombreLogements" type="xs:string" />
         <xs:element name="Statut" type="xs:string" />
