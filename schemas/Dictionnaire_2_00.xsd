@@ -1,5 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+  <xs:complexType name="stringAvecAttributs">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+			<xs:attribute name="Donnee" type="xs:string"/>
+			<xs:attribute name="Type" type="xs:string"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
   <xs:element name="Dictionnaire">
     <xs:complexType>
       <xs:all>
@@ -9,6 +19,7 @@
       </xs:all>
     </xs:complexType>
   </xs:element>
+	
   <xs:element name="Version" type="xs:string">
     <xs:annotation>
       <xs:documentation>Version du fichier xml du fournisseur pour la récupération</xs:documentation>
@@ -99,15 +110,13 @@
         <xs:element minOccurs="0" ref="Techniques" />
       </xs:sequence>
       <xs:attribute name="Code" type="Tarifs" use="required" />
-			<xs:attribute ref="Donnee"/>
-			<xs:attribute ref="Type"/>
     </xs:complexType>
   </xs:element>
   <xs:element name="Montants">
     <xs:complexType>
       <xs:choice maxOccurs="unbounded">
-        <xs:element name="Total" type="xs:string" />
-        <xs:element name="TotalCumulatif" type="xs:string" />
+        <xs:element name="Total" type="stringAvecAttributs" />
+        <xs:element name="TotalCumulatif" type="stringAvecAttributs" />
         <xs:element ref="Montant" />
         <xs:element ref="MontantCumulatif" />
       </xs:choice>
@@ -116,28 +125,28 @@
   <xs:element name="Entete">
     <xs:complexType>
       <xs:choice maxOccurs="unbounded">
-        <xs:element name="DateFacture" type="xs:string" />
-        <xs:element name="DateDebut" type="xs:string" />
-        <xs:element name="DateFin" type="xs:string" />
+        <xs:element name="DateFacture" type="stringAvecAttributs" />
+        <xs:element name="DateDebut" type="stringAvecAttributs" />
+        <xs:element name="DateFin" type="stringAvecAttributs" />
         <xs:element ref="Historique" />
         <xs:element ref="Annulation" />
-        <xs:element name="DateEcheance" type="xs:string" />
-        <xs:element name="Numero" type="xs:string" />
-        <xs:element name="NumeroSerie" type="xs:string" />
-        <xs:element name="NumeroCompte" type="xs:string" />
-        <xs:element name="NumeroContrat" type="xs:string" />
-        <xs:element name="FraisAutre" type="xs:string" />
-        <xs:element name="FraisAdmin" type="xs:string" />
-        <xs:element name="GrandTotal" type="xs:string" />
-        <xs:element name="GrandTotalNet" type="xs:string" />
-        <xs:element name="GrandTotalTps" type="xs:string" />
-        <xs:element name="GrandTotalTvq" type="xs:string" />
-        <xs:element name="NombreJours" type="xs:string" />
-        <xs:element name="NombreLogements" type="xs:string" />
-        <xs:element name="Statut" type="xs:string" />
-        <xs:element name="TypeFacture" type="xs:string" />
-        <xs:element name="IndAjustement" type="xs:string" />
-        <xs:element name="CodeTarif" type="xs:string" />
+        <xs:element name="DateEcheance" type="stringAvecAttributs" />
+        <xs:element name="Numero" type="stringAvecAttributs" />
+        <xs:element name="NumeroSerie" type="stringAvecAttributs" />
+        <xs:element name="NumeroCompte" type="stringAvecAttributs" />
+        <xs:element name="NumeroContrat" type="stringAvecAttributs" />
+        <xs:element name="FraisAutre" type="stringAvecAttributs" />
+        <xs:element name="FraisAdmin" type="stringAvecAttributs" />
+        <xs:element name="GrandTotal" type="stringAvecAttributs" />
+        <xs:element name="GrandTotalNet" type="stringAvecAttributs" />
+        <xs:element name="GrandTotalTps" type="stringAvecAttributs" />
+        <xs:element name="GrandTotalTvq" type="stringAvecAttributs" />
+        <xs:element name="NombreJours" type="stringAvecAttributs" />
+        <xs:element name="NombreLogements" type="stringAvecAttributs" />
+        <xs:element name="Statut" type="stringAvecAttributs" />
+        <xs:element name="TypeFacture" type="stringAvecAttributs" />
+        <xs:element name="IndAjustement" type="stringAvecAttributs" />
+        <xs:element name="CodeTarif" type="stringAvecAttributs" />
         <xs:element name="RabaisTransitoire">
           <xs:complexType>
             <xs:all>
@@ -147,7 +156,7 @@
             </xs:all>
           </xs:complexType>
         </xs:element>
-        <xs:element name="DateChangementSerie" type="xs:string" />
+        <xs:element name="DateChangementSerie" type="stringAvecAttributs" />
       </xs:choice>
     </xs:complexType>
   </xs:element>
@@ -190,7 +199,7 @@
   <xs:element name="ElementTechnique">
     <xs:complexType>
       <xs:sequence>
-        <xs:element name="Valeur" type="xs:string" />
+        <xs:element name="Valeur" type="stringAvecAttributs" />
         <xs:element name="Description" type="xs:string" />
       </xs:sequence>
       <xs:attribute name="Code" type="TypesElementTechnique" use="required" />
@@ -212,11 +221,11 @@
       <xs:all>
         <xs:element minOccurs="0" name="Section" type="xs:string" />
         <xs:element minOccurs="0" name="SectionValeur" type="xs:string" />
-        <xs:element name="Valeur" type="xs:string" />
+        <xs:element name="Valeur" type="stringAvecAttributs" />
         <xs:element minOccurs="0" name="TagDescription" type="xs:string" />
         <xs:element minOccurs="0" name="DescrValeur" type="xs:string" />
-        <xs:element minOccurs="0" name="Tps" type="xs:string" />
-        <xs:element minOccurs="0" name="Tvq" type="xs:string" />
+        <xs:element minOccurs="0" name="Tps" type="stringAvecAttributs" />
+        <xs:element minOccurs="0" name="Tvq" type="stringAvecAttributs" />
         <xs:element minOccurs="0" name="DescrTps" type="xs:string" />
         <xs:element minOccurs="0" name="DescrTvq" type="xs:string" />
         <xs:element minOccurs="0" name="TagDescription2" type="xs:string" />
@@ -232,11 +241,11 @@
       <xs:all>
         <xs:element minOccurs="0" name="Section" type="xs:string" />
         <xs:element minOccurs="0" name="SectionValeur" type="xs:string" />
-        <xs:element name="Valeur" type="xs:string" />
+        <xs:element name="Valeur" type="stringAvecAttributs" />
         <xs:element minOccurs="0" name="TagDescription" type="xs:string" />
         <xs:element minOccurs="0" name="DescrValeur" type="xs:string" />
-        <xs:element minOccurs="0" name="Tps" type="xs:string" />
-        <xs:element minOccurs="0" name="Tvq" type="xs:string" />
+        <xs:element minOccurs="0" name="Tps" type="stringAvecAttributs" />
+        <xs:element minOccurs="0" name="Tvq" type="stringAvecAttributs" />
         <xs:element minOccurs="0" name="DescrTps" type="xs:string" />
         <xs:element minOccurs="0" name="DescrTvq" type="xs:string" />
         <xs:element minOccurs="0" name="TagDescription2" type="xs:string" />
