@@ -157,6 +157,7 @@
           </xs:complexType>
         </xs:element>
         <xs:element name="DateChangementSerie" type="stringAvecAttributs" />
+        <xs:element name="InventaireEclairage" type="stringAvecAttributs" />
       </xs:choice>
     </xs:complexType>
   </xs:element>
@@ -335,6 +336,8 @@
       <xs:enumeration value="PrixSpede" />
       <xs:enumeration value="VolumeGazRenouvelable" />
       <xs:enumeration value="PrixGazRenouvelable" />
+      <xs:enumeration value="NbrJoursInventaire" />
+      <xs:enumeration value="WattageTotal" />
     </xs:restriction>
   </xs:simpleType>
   <xs:simpleType name="TypesElementContractuel">
