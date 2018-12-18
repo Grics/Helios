@@ -281,6 +281,7 @@
       <xs:enumeration value="CoutKwh2E" />
       <xs:enumeration value="CoutDepasse" />
       <xs:enumeration value="CoutMinAlimPolyphase" />
+      <xs:enumeration value="CoutMinAlimMonophase" />
       <xs:enumeration value="CoutRedev" />
       <xs:enumeration value="CoutLuminaire" />
       <xs:enumeration value="CoutLocPoteau" />
