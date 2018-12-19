@@ -287,6 +287,7 @@
       <xs:enumeration value="CoutLocPoteau" />
       <xs:enumeration value="TransfertCompte" />
       <xs:enumeration value="ObligationMinimaleAnnuelle" />
+      <xs:enumeration value="ObligationMinimaleAnnuelleSansTaxe" />	    
       <xs:enumeration value="ContributionRaccordement" />
       <xs:enumeration value="AjustementInventaire" />
       <xs:enumeration value="SoldeInventaireFourniture" />
