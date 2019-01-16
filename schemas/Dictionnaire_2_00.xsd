@@ -158,6 +158,9 @@
         </xs:element>
         <xs:element name="DateChangementSerie" type="stringAvecAttributs" />
         <xs:element name="InventaireEclairage" type="stringAvecAttributs" />
+        <xs:element name="NoDocumentCalcul" type="stringAvecAttributs" />
+        <xs:element name="NoDocumentCalculOriginal" type="stringAvecAttributs" />
+        <xs:element name="AnnulationGlobale" type="stringAvecAttributs" />
       </xs:choice>
     </xs:complexType>
   </xs:element>
