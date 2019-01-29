@@ -137,6 +137,7 @@
           </xs:complexType>
         </xs:element>
         <xs:element name="DateChangementSerie" type="xs:string" />
+        <xs:element name="NoDocumentCalcul" type="xs:string" />
       </xs:choice>
     </xs:complexType>
   </xs:element>
