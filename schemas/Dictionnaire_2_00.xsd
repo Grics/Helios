@@ -345,6 +345,8 @@
       <xs:enumeration value="PrixGazRenouvelable" />
       <xs:enumeration value="NbrJoursInventaire" />
       <xs:enumeration value="WattageTotal" />
+      <xs:enumeration value="PuissanceReelleDeduite" />
+      <xs:enumeration value="PuissanceAFacturer" />
     </xs:restriction>
   </xs:simpleType>
   <xs:simpleType name="TypesElementContractuel">
