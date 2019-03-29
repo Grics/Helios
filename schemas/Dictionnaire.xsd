@@ -270,6 +270,7 @@
       <xs:enumeration value="ContributionRaccordement" />
       <xs:enumeration value="AjustementInventaire" />
       <xs:enumeration value="SoldeInventaireFourniture" />
+      <xs:enumeration value="CoutConsommationGazAppoint" />
     </xs:restriction>
   </xs:simpleType>
   <xs:simpleType name="Tarifs">
@@ -317,6 +318,7 @@
       <xs:enumeration value="PrixSpede" />
       <xs:enumeration value="VolumeGazRenouvelable" />
       <xs:enumeration value="PrixGazRenouvelable" />
+      <xs:enumeration value="ConsommationGazAppoint" />
     </xs:restriction>
   </xs:simpleType>
   <xs:simpleType name="TypesElementContractuel">
