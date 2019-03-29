@@ -318,6 +318,7 @@
       <xs:enumeration value="PrixSpede" />
       <xs:enumeration value="VolumeGazRenouvelable" />
       <xs:enumeration value="PrixGazRenouvelable" />
+      <xs:enumeration value="AchatGazAppoint" />
       <xs:enumeration value="ConsommationGazAppoint" />
     </xs:restriction>
   </xs:simpleType>
