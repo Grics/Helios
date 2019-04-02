@@ -271,6 +271,7 @@
       <xs:enumeration value="AjustementInventaire" />
       <xs:enumeration value="SoldeInventaireFourniture" />
       <xs:enumeration value="CoutConsommationGazAppoint" />
+      <xs:enumeration value="CoutAchatGazAppoint" />
     </xs:restriction>
   </xs:simpleType>
   <xs:simpleType name="Tarifs">
