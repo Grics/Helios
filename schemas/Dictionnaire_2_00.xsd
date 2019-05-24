@@ -66,7 +66,7 @@
               <xs:element name="Donnee">
                 <xs:complexType>
                   <xs:attribute name="Nom" type="xs:string" use="required" />
-                  <xs:attribute name="Type" type="xs:string" use="required" />
+                  <xs:attribute name="Type" type="xs:string" />
                   <xs:attribute name="Action" use="required">
                     <xs:simpleType>
                       <xs:restriction base="xs:string">
