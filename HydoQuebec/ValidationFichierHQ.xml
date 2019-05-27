@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ValidationHQ>
+   <Racine>Z6FF_FACTURE_XML_01</Racine>
+   <Entete>Z1FFU034S</Entete>
+   <LongueurFichier>ZCHECKSUM</LongueurFichier>
+   <Tri>ZDATE_IMPRESSION</Tri>
+   <NoeudsAExclure>
+      <Noeuds>Z1FFU031S</Noeuds>
+   </NoeudsAExclure>
+   <NumeroClient>ZPARTNER</NumeroClient>
+   <NoCalcul>ZNO_DOC_CALCUL</NoCalcul>
+</ValidationHQ>

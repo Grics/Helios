@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ValidationHQ2019>
+   <Racine version="HQ2019">//correspondance"</Racine>
+   <Entete version="HQ2019">//partenaire</Entete>
+   <LongueurFichier version="HQ2019">//correspondance</LongueurFichier>
+   <Tri version="HQ2019" valeur="dateCreation">//correspondance</Tri>
+   <NumeroClient version="HQ2019" valeur="no">//partenaire</NumeroClient>
+   <NoCalcul version="HQ2019" valeur="noDocumentCalcul">//FacturePeriode</NoCalcul>
+   <CodeTarif version="HQ2019" valeur="tarif">//FacturePeriode/sousPeriodes/FactureSousPeriode</CodeTarif>
+</ValidationHQ2019>
+
