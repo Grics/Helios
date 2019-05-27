@@ -140,6 +140,7 @@
         <xs:element name="FraisAdmin" type="stringAvecAttributs" />
         <xs:element name="GrandTotal" type="stringAvecAttributs" />
         <xs:element name="NombreJours" type="stringAvecAttributs" />
+        <xs:element name="NombreLogements" type="stringAvecAttributs" />
         <xs:element name="Statut" type="stringAvecAttributs" />
         <xs:element name="TypeFacture" type="stringAvecAttributs" />
         <xs:element name="IndAjustement" type="stringAvecAttributs" />
