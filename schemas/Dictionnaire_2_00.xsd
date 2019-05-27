@@ -287,13 +287,15 @@
       <xs:enumeration value="CoutLocPoteau" />
       <xs:enumeration value="TransfertCompte" />
       <xs:enumeration value="ObligationMinimaleAnnuelle" />
-      <xs:enumeration value="ObligationMinimaleAnnuelleSansTaxe" />	    
+      <xs:enumeration value="ObligationMinimaleAnnuelleSansTaxe" />
       <xs:enumeration value="ContributionRaccordement" />
       <xs:enumeration value="AjustementInventaire" />
       <xs:enumeration value="SoldeInventaireFourniture" />
       <xs:enumeration value="FraisAbonnement" />
       <xs:enumeration value="PrimeMauvaisFacteurPuissance" />
       <xs:enumeration value="CoutAccesReseau" />
+      <xs:enumeration value="CoutConsommationGazAppoint" />
+      <xs:enumeration value="CoutAchatGazAppoint" />
     </xs:restriction>
   </xs:simpleType>
   <xs:simpleType name="Tarifs">
@@ -346,6 +348,8 @@
       <xs:enumeration value="PuissanceReelleDeduite" />
       <xs:enumeration value="PuissanceAFacturer" />
       <xs:enumeration value="NombreLogements" />
+      <xs:enumeration value="AchatGazAppoint" />
+      <xs:enumeration value="ConsommationGazAppoint" />
     </xs:restriction>
   </xs:simpleType>
   <xs:simpleType name="TypesElementContractuel">
