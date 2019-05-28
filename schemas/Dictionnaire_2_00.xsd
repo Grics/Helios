@@ -140,7 +140,6 @@
         <xs:element name="FraisAdmin" type="stringAvecAttributs" />
         <xs:element name="GrandTotal" type="stringAvecAttributs" />
         <xs:element name="NombreJours" type="stringAvecAttributs" />
-        <xs:element name="NbrLogements" type="stringAvecAttributs" />
         <xs:element name="Statut" type="stringAvecAttributs" />
         <xs:element name="TypeFacture" type="stringAvecAttributs" />
         <xs:element name="IndAjustement" type="stringAvecAttributs" />
@@ -348,7 +347,7 @@
       <xs:enumeration value="WattageTotal" />
       <xs:enumeration value="PuissanceReelleDeduite" />
       <xs:enumeration value="PuissanceAFacturer" />
-      <xs:enumeration value="NombreLogements" />
+      <xs:enumeration value="NbrLogements" />
       <xs:enumeration value="AchatGazAppoint" />
       <xs:enumeration value="ConsommationGazAppoint" />
     </xs:restriction>
