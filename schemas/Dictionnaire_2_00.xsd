@@ -348,7 +348,7 @@
       <xs:enumeration value="WattageTotal" />
       <xs:enumeration value="PuissanceReelleDeduite" />
       <xs:enumeration value="PuissanceAFacturer" />
-      <xs:enumeration value="NombreLogements" />
+      <xs:enumeration value="NbrLogements" />
       <xs:enumeration value="AchatGazAppoint" />
       <xs:enumeration value="ConsommationGazAppoint" />
     </xs:restriction>
