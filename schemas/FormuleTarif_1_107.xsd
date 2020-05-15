@@ -174,14 +174,15 @@
       <xs:enumeration value="EVP"/>
       <xs:enumeration value="DN"/>
       <xs:enumeration value="DP"/>
+      <xs:enumeration value="BR"/>
     </xs:restriction>
   </xs:simpleType>
   <xs:simpleType name="NomSaison">
     <xs:restriction base="xs:string">
       <xs:enumeration value="été"/>
       <xs:enumeration value="hiver"/>
-      <!--Correspondent au cl�s dans les ressources DetailFacture.resx-->
-      <!-- ATTENTION! Si une valeur est ajout�e ici, voir � ajuster l'�n�m�ration CodeSaison et la classe InfoSaisons dans le fichier InfoSaisons.cs (� la racine du projet). -->
+      <!--Correspondent au clés dans les ressources DetailFacture.resx-->
+      <!-- ATTENTION! Si une valeur est ajoutée ici, voir à ajuster l'énumération CodeSaison et la classe InfoSaisons dans le fichier InfoSaisons.cs (à la racine du projet). -->
     </xs:restriction>
   </xs:simpleType>
 </xs:schema>
