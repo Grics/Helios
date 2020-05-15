@@ -98,6 +98,7 @@
       <xs:enumeration value="CreditAlimentation"/>
       <xs:enumeration value="RedevanceAbonnement"/>
       <xs:enumeration value="CoutEnergie"/>
+      <xs:enumeration value="CoutEnergieRestante"/>
       <xs:enumeration value="CoutEnergieReseauAutonome"/>
       <xs:enumeration value="ExcedentReseauAutonome"/>
       <xs:enumeration value="PrimePuissance"/>
