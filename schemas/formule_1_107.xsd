@@ -142,6 +142,7 @@
       <xs:enumeration value="PrixSpede"/>
       <xs:enumeration value="VolumeGazRenouvelable"/>
       <xs:enumeration value="PrixGazRenouvelable"/>
+      <xs:enumeration value="HeuresUtilisation"/>
     </xs:restriction>
   </xs:simpleType>
   <xs:simpleType name="TypeElementContractuel">
@@ -246,6 +247,7 @@
     <xs:restriction base="xs:string">
       <xs:enumeration value="Redevance"/>
       <xs:enumeration value="PremiereTranche"/>
+      <xs:enumeration value="DeuxiemeTranche"/>
       <xs:enumeration value="ResteConsommation"/>
       <xs:enumeration value="Puissances"/>
       <xs:enumeration value="CreditsMesurage"/>
