@@ -142,6 +142,7 @@
       <xs:enumeration value="PrixSpede"/>
       <xs:enumeration value="VolumeGazRenouvelable"/>
       <xs:enumeration value="PrixGazRenouvelable"/>
+      <xs:enumeration value="ConsommationGazAppoint"/>
       <xs:enumeration value="HeuresUtilisation"/>
     </xs:restriction>
   </xs:simpleType>
@@ -220,6 +221,7 @@
       <xs:enumeration value="HQ.TarifECM"/>
       <xs:enumeration value="HQ.TarifL"/>
       <xs:enumeration value="HQ.TarifEVP"/>
+      <xs:enumeration value="HQ.TarifBR"/>
       <xs:enumeration value="GazMetro.TarifD1"/>
       <xs:enumeration value="GazMetro.TarifD3"/>
       <xs:enumeration value="GazMetro.TarifD5"/>
