@@ -207,6 +207,7 @@
       <xs:enumeration value="LumSentinelleSansPoteau2000"/>
       <xs:enumeration value="LumSentinelleSansPoteau700"/>
       <xs:enumeration value="LumDel610"/>
+      <xs:enumeration value="CoutConsommationRestante"/>
     </xs:restriction>
   </xs:simpleType>
   <xs:simpleType name="Classes">
