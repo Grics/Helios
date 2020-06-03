@@ -1,0 +1,312 @@
+{
+   "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+   "contentVersion": "1.0.0.0",
+   "parameters": {
+      "AzureWebAppMeteo": { "type": "string" },
+      "AzureWebAppWebJobs": { "type": "string" },
+      "HeliosEnvironnementName": { "type": "string" },
+      "SchedulesStartTime": { "type": "object" },
+      "webJobsSiteProperties": { "type": "object" },
+      "webMeteoSiteProperties": { "type": "object" }
+   },
+   "variables": {
+      "webJobsCallHeader": "[base64(concat(parameters('webJobsSiteProperties').publishingUserName, ':', parameters('webJobsSiteProperties').publishingPassword))]",
+      "webJobsMeteoCallHeader": "[base64(concat(parameters('webMeteoSiteProperties').publishingUserName, ':', parameters('webMeteoSiteProperties').publishingPassword))]"
+   },
+   "resources": [
+      {
+         "type": "Microsoft.Logic/workflows",
+         "apiVersion": "2017-07-01",
+         "name": "[concat('Planif-CalculMassif-', parameters('HeliosEnvironnementName'), '-al')]",
+         "location": "[resourceGroup().location]",
+         "tags": {
+            "displayName": "Planif_CalculMassif"
+         },
+         "properties": {
+            "state": "Enabled",
+            "definition": {
+               "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+               "contentVersion": "1.0.0.0",
+               "triggers": {
+                  "Recurrence": {
+                     "recurrence": {
+                        "frequency": "Day",
+                        "interval": 1,
+                        "schedule": {
+                           "hours": [ "[parameters('SchedulesStartTime').PlanifCalculMassifStartTime[0]]" ],
+                           "minutes": [ "[parameters('SchedulesStartTime').PlanifCalculMassifStartTime[1]]" ]
+                        },
+                        "timeZone": "Eastern Standard Time"
+                     },
+                     "type": "Recurrence"
+                  }
+               },
+               "actions": {
+                  "Appel_Webjob": {
+                     "type": "Http",
+                     "inputs": {
+                        "headers": {
+                           "authorization": "[concat('Basic ', variables('webJobsCallHeader'))]"
+                        },
+                        "method": "POST",
+                        "uri": "[concat('https://', parameters('AzureWebAppWebJobs'), '.scm.azurewebsites.net/api/triggeredwebjobs/CalculMassif/run')]"
+                     }
+                  }
+               }
+            }
+         }
+      },
+      {
+         "type": "Microsoft.Logic/workflows",
+         "apiVersion": "2017-07-01",
+         "name": "[concat('Planif-ClientCompteurVersion-', parameters('HeliosEnvironnementName'), '-al')]",
+         "location": "[resourceGroup().location]",
+         "tags": {
+            "displayName": "Planif_ClientCompteurVersion"
+         },
+         "properties": {
+            "state": "Enabled",
+            "definition": {
+               "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+               "contentVersion": "1.0.0.0",
+               "triggers": {
+                  "Recurrence": {
+                     "recurrence": {
+                        "frequency": "Day",
+                        "interval": 1,
+                        "schedule": {
+                           "hours": [ "[parameters('SchedulesStartTime').PlanifClientCompteurVersionStartTime[0]]" ],
+                           "minutes": [ "[parameters('SchedulesStartTime').PlanifClientCompteurVersionStartTime[1]]" ]
+                        },
+                        "timeZone": "Eastern Standard Time"
+                     },
+                     "type": "Recurrence"
+                  }
+               },
+               "actions": {
+                  "Appel_Webjob": {
+                     "type": "Http",
+                     "inputs": {
+                        "headers": {
+                           "authorization": "[concat('Basic ', variables('webJobsCallHeader'))]"
+                        },
+                        "method": "POST",
+                        "uri": "[concat('https://', parameters('AzureWebAppWebJobs'), '.scm.azurewebsites.net/api/triggeredwebjobs/ClientCompteurVersion/run')]"
+                     }
+                  }
+               }
+            }
+         }
+      },
+      {
+         "type": "Microsoft.Logic/workflows",
+         "apiVersion": "2017-07-01",
+         "name": "[concat('Planif-CompteursInactifs-', parameters('HeliosEnvironnementName'), '-al')]",
+         "location": "[resourceGroup().location]",
+         "tags": {
+            "displayName": "Planif_CompteursInactifs"
+         },
+         "properties": {
+            "state": "Enabled",
+            "definition": {
+               "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+               "contentVersion": "1.0.0.0",
+               "triggers": {
+                  "Recurrence": {
+                     "recurrence": {
+                        "frequency": "Day",
+                        "interval": 1,
+                        "schedule": {
+                           "hours": [ "[parameters('SchedulesStartTime').PlanifCompteursInactifsStartTime[0]]" ],
+                           "minutes": [ "[parameters('SchedulesStartTime').PlanifCompteursInactifsStartTime[1]]" ]
+                        },
+                        "timeZone": "Eastern Standard Time"
+                     },
+                     "type": "Recurrence"
+                  }
+               },
+               "actions": {
+                  "Appel_Webjob": {
+                     "type": "Http",
+                     "inputs": {
+                        "headers": {
+                           "authorization": "[concat('Basic ', variables('webJobsCallHeader'))]"
+                        },
+                        "method": "POST",
+                        "uri": "[concat('https://', parameters('AzureWebAppWebJobs'), '.scm.azurewebsites.net/api/triggeredwebjobs/CompteursInactifs/run')]"
+                     }
+                  }
+               }
+            }
+         }
+      },
+      {
+         "type": "Microsoft.Logic/workflows",
+         "apiVersion": "2017-07-01",
+         "name": "[concat('Planif-TraitementTableAzure-', parameters('HeliosEnvironnementName'), '-al')]",
+         "location": "[resourceGroup().location]",
+         "tags": {
+            "displayName": "Planif_TraitementTableAzure"
+         },
+         "properties": {
+            "state": "Enabled",
+            "definition": {
+               "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+               "contentVersion": "1.0.0.0",
+               "triggers": {
+                  "Recurrence": {
+                     "recurrence": {
+                        "frequency": "Day",
+                        "interval": 1,
+                        "schedule": {
+                           "hours": [ "[parameters('SchedulesStartTime').PlanifTraitementTableAzureStartTime[0]]" ],
+                           "minutes": [ "[parameters('SchedulesStartTime').PlanifTraitementTableAzureStartTime[1]]" ]
+                        },
+                        "timeZone": "Eastern Standard Time"
+                     },
+                     "type": "Recurrence"
+                  }
+               },
+               "actions": {
+                  "Appel_Webjob": {
+                     "type": "Http",
+                     "inputs": {
+                        "headers": {
+                           "authorization": "[concat('Basic ', variables('webJobsCallHeader'))]"
+                        },
+                        "method": "POST",
+                        "uri": "[concat('https://', parameters('AzureWebAppWebJobs'), '.scm.azurewebsites.net/api/triggeredwebjobs/TraitementTableAzure/run')]"
+                     }
+                  }
+               }
+            }
+         }
+      },
+      {
+         "type": "Microsoft.Logic/workflows",
+         "apiVersion": "2017-07-01",
+         "name": "[concat('Planif-RecuperationMeteo-', parameters('HeliosEnvironnementName'), '-al')]",
+         "location": "[resourceGroup().location]",
+         "tags": {
+            "displayName": "Planif_RecuperationMeteo"
+         },
+         "properties": {
+            "state": "Enabled",
+            "definition": {
+               "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+               "contentVersion": "1.0.0.0",
+               "triggers": {
+                  "Recurrence": {
+                     "recurrence": {
+                        "frequency": "Day",
+                        "interval": 1,
+                        "schedule": {
+                           "hours": [ "[parameters('SchedulesStartTime').PlanifRecuperationMeteoStartTime[0]]" ],
+                           "minutes": [ "[parameters('SchedulesStartTime').PlanifRecuperationMeteoStartTime[1]]" ]
+                        },
+                        "timeZone": "Eastern Standard Time"
+                     },
+                     "type": "Recurrence"
+                  }
+               },
+               "actions": {
+                  "Appel_Webjob": {
+                     "type": "Http",
+                     "inputs": {
+                        "headers": {
+                           "authorization": "[concat('Basic ', variables('webJobsMeteoCallHeader'))]"
+                        },
+                        "method": "POST",
+                        "uri": "[concat('https://', parameters('AzureWebAppMeteo'), '.scm.azurewebsites.net/api/triggeredwebjobs/RecupMeteo/run')]"
+                     }
+                  }
+               }
+            }
+         }
+      },
+      {
+         "type": "Microsoft.Logic/workflows",
+         "apiVersion": "2017-07-01",
+         "name": "[concat('Planif-Budget-', parameters('HeliosEnvironnementName'), '-al')]",
+         "location": "[resourceGroup().location]",
+         "tags": {
+            "displayName": "Planif_Budget"
+         },
+         "properties": {
+            "state": "Enabled",
+            "definition": {
+               "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+               "contentVersion": "1.0.0.0",
+               "triggers": {
+                  "Recurrence": {
+                     "recurrence": {
+                        "frequency": "Day",
+                        "interval": 1,
+                        "schedule": {
+                           "hours": [ "[parameters('SchedulesStartTime').PlanifBudgetStartTime[0]]" ],
+                           "minutes": [ "[parameters('SchedulesStartTime').PlanifBudgetStartTime[1]]" ]
+                        },
+                        "timeZone": "Eastern Standard Time"
+                     },
+                     "type": "Recurrence"
+                  }
+               },
+               "actions": {
+                  "Appel_Webjob": {
+                     "type": "Http",
+                     "inputs": {
+                        "headers": {
+                           "authorization": "[concat('Basic ', variables('webJobsCallHeader'))]"
+                        },
+                        "method": "POST",
+                        "uri": "[concat('https://', parameters('AzureWebAppWebJobs'), '.scm.azurewebsites.net/api/triggeredwebjobs/Budget/run')]"
+                     }
+                  }
+               }
+            }
+         }
+      },
+      {
+         "type": "Microsoft.Logic/workflows",
+         "apiVersion": "2017-07-01",
+         "name": "[concat('Planif-EntretientBD-', parameters('HeliosEnvironnementName'), '-al')]",
+         "location": "[resourceGroup().location]",
+         "tags": {
+            "displayName": "Planif_EntretientBD"
+         },
+         "properties": {
+            "state": "Enabled",
+            "definition": {
+               "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+               "contentVersion": "1.0.0.0",
+               "triggers": {
+                  "Recurrence": {
+                     "recurrence": {
+                        "frequency": "Day",
+                        "interval": 1,
+                        "schedule": {
+                           "hours": [ "[parameters('SchedulesStartTime').PlanifEntretientBDStartTime[0]]" ],
+                           "minutes": [ "[parameters('SchedulesStartTime').PlanifEntretientBDStartTime[1]]" ]
+                        },
+                        "timeZone": "Eastern Standard Time"
+                     },
+                     "type": "Recurrence"
+                  }
+               },
+               "actions": {
+                  "Appel_Webjob": {
+                     "type": "Http",
+                     "inputs": {
+                        "headers": {
+                           "authorization": "[concat('Basic ', variables('webJobsCallHeader'))]"
+                        },
+                        "method": "POST",
+                        "uri": "[concat('https://', parameters('AzureWebAppWebJobs'), '.scm.azurewebsites.net/api/triggeredwebjobs/EntretientBD/run')]"
+                     }
+                  }
+               }
+            }
+         }
+      }
+   ]
+}
