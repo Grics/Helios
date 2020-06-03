@@ -1,0 +1,145 @@
+{
+   "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+   "contentVersion": "1.0.0.0",
+   "parameters": {
+      "HeliosEnvironnementName": { "type": "string" },
+      "AzureSqlServerName": { "type": "string" },
+      "sqlPoolEdition": { "type": "string" },
+      "databaseDtuMin": { "type": "int" },
+      "databaseDtuMax": { "type": "int" },
+      "heliosSqlLogin": { "type": "string" },
+      "heliosSqlPassword": { "type": "securestring" }
+   },
+   "variables": {
+      "sqlHeliosDbName": "[concat('helios-', parameters('HeliosEnvironnementName'), '-db')]",
+      "sqlMeteoDbName": "[concat('meteo-', parameters('HeliosEnvironnementName'), '-db')]",
+      "sqlPoolName": "[concat('helios-', parameters('HeliosEnvironnementName'), '-pool')]"
+   },
+   "resources": [
+      {
+         "name": "[parameters('AzureSqlServerName')]",
+         "type": "Microsoft.Sql/servers",
+         "location": "[resourceGroup().location]",
+         "apiVersion": "2014-04-01-preview",
+         "tags": {
+            "displayName": "SqlAzure"
+         },
+         "properties": {
+            "administratorLogin": "[parameters('heliosSqlLogin')]",
+            "administratorLoginPassword": "[parameters('heliosSqlPassword')]"
+         },
+         "resources": [
+            {
+               "name": "[variables('sqlPoolName')]",
+               "type": "elasticPools",
+               "apiVersion": "2014-04-01-preview",
+               "location": "[resourceGroup().location]",
+               "dependsOn": [
+                  "[resourceId('Microsoft.Sql/servers', parameters('AzureSqlServerName'))]"
+               ],
+               "properties": {
+                  "edition": "[parameters('sqlPoolEdition')]",
+                  "dtu": "[parameters('databaseDtuMax')]",
+                  "databaseDtuMin": "[parameters('databaseDtuMin')]",
+                  "databaseDtuMax": "[parameters('databaseDtuMax')]"
+               }
+            },
+            {
+               "name": "ClientIpAdress",
+               "type": "firewallrules",
+               "location": "[resourceGroup().location]",
+               "apiVersion": "2014-04-01-preview",
+               "dependsOn": [
+                  "[resourceId('Microsoft.Sql/servers', parameters('AzureSqlServerName'))]"
+               ],
+               "properties": {
+                  "startIpAddress": "199.84.132.4",
+                  "endIpAddress": "199.84.132.4"
+               }
+            },
+            {
+               "name": "Grics",
+               "type": "firewallrules",
+               "location": "[resourceGroup().location]",
+               "apiVersion": "2014-04-01-preview",
+               "dependsOn": [
+                  "[resourceId('Microsoft.Sql/servers', parameters('AzureSqlServerName'))]"
+               ],
+               "properties": {
+                  "startIpAddress": "199.84.132.60",
+                  "endIpAddress": "199.84.132.60"
+               }
+            },
+            {
+               "name": "AllowAllWindowsAzureIps",
+               "type": "firewallrules",
+               "location": "[resourceGroup().location]",
+               "apiVersion": "2014-04-01-preview",
+               "dependsOn": [
+                  "[resourceId('Microsoft.Sql/servers', parameters('AzureSqlServerName'))]"
+               ],
+               "properties": {
+                  "startIpAddress": "0.0.0.0",
+                  "endIpAddress": "0.0.0.0"
+               }
+            },
+            {
+               "name": "[variables('sqlHeliosDbName')]",
+               "type": "databases",
+               "location": "[resourceGroup().location]",
+               "apiVersion": "2014-04-01-preview",
+               "dependsOn": [
+                  "[resourceId('Microsoft.Sql/servers', parameters('AzureSqlServerName'))]",
+                  "[resourceId('Microsoft.Sql/servers/elasticpools', parameters('AzureSqlServerName'), variables('sqlPoolName'))]"
+               ],
+               "tags": {
+                  "displayName": "Helios"
+               },
+               "properties": {
+                  "collation": "SQL_Latin1_General_CP1_CI_AI",
+                  "edition": "Standard",
+                  "serviceLevelObjective": "ElasticPool",
+                  "maxSizeBytes": "107374182400",
+                  "requestedServiceObjectiveName": "ElasticPool",
+                  "elasticPoolName": "[variables('sqlPoolName')]"
+               }
+            },
+            {
+               "name": "[variables('sqlMeteoDbName')]",
+               "type": "databases",
+               "location": "[resourceGroup().location]",
+               "apiVersion": "2014-04-01-preview",
+               "dependsOn": [
+                  "[resourceId('Microsoft.Sql/servers', parameters('AzureSqlServerName'))]",
+                  "[resourceId('Microsoft.Sql/servers/elasticpools', parameters('AzureSqlServerName'), variables('sqlPoolName'))]"
+               ],
+               "tags": {
+                  "displayName": "Meteo"
+               },
+               "properties": {
+                  "collation": "SQL_Latin1_General_Cp1_CI_AI",
+                  "edition": "Standard",
+                  "serviceLevelObjective": "ElasticPool",
+                  "maxSizeBytes": "107374182400",
+                  "requestedServiceObjectiveName": "ElasticPool",
+                  "elasticPoolName": "[variables('sqlPoolName')]"
+               }
+            }
+         ]
+      }
+   ],
+   "outputs": {
+      "sqlPoolName": {
+         "type": "string",
+         "value": "[variables('sqlPoolName')]"
+      },
+      "sqlHeliosDbName": {
+         "type": "string",
+         "value": "[variables('sqlHeliosDbName')]"
+      },
+      "sqlMeteoDbName": {
+         "type": "string",
+         "value": "[variables('sqlMeteoDbName')]"
+      }
+   }
+}

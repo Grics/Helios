@@ -1,0 +1,275 @@
+{
+   "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+   "contentVersion": "1.0.0.0",
+   "parameters": {
+      "HeliosEnvironnementName": {
+         "type": "string"
+      },
+      "AzureHeliosServerFarmName": {
+         "type": "string"
+      },
+      "AzureWebJobsServerFarmName": {
+         "type": "string"
+      },
+      "AzureNotificationServerFarmName": {
+         "type": "string"
+      },
+      "PfxCertificate": {
+         "type": "securestring"
+      },
+      "PfxCertificateYear": {
+         "type": "int"
+      },
+      "EmailContact": {
+         "type": "string"
+      },
+      "TaillePlanHeliosWeb": {
+         "type": "string"
+      },
+      "TaillePlanHeliosNotification": {
+         "type": "string"
+      },
+      "TaillePlanHeliosJobs": {
+         "type": "string"
+      },
+      "NbInstanceInitialHeliosWeb": {
+         "type": "int"
+      },
+      "NbInstanceInitialHeliosNotification": {
+         "type": "int"
+      },
+      "NbInstanceInitialHeliosWebJobs": {
+         "type": "int"
+      }
+   },
+   "variables": {
+      "CertificatGricsName": "[concat('CertificatGrics-', parameters('PfxCertificateYear'))]"
+   },
+   "resources": [
+      {
+         "name": "[parameters('AzureHeliosServerFarmName')]",
+         "type": "Microsoft.Web/serverfarms",
+         "location": "[resourceGroup().location]",
+         "apiVersion": "2015-08-01",
+         "sku": {
+            "name": "[parameters('TaillePlanHeliosWeb')]"
+         },
+         "tags": {
+            "displayName": "HeliosWebSites"
+         },
+         "properties": {
+            "name": "[parameters('AzureHeliosServerFarmName')]",
+            "numberOfWorkers": "[parameters('NbInstanceInitialHeliosWeb')]"
+         }
+      },
+      {
+         "name": "[parameters('AzureWebJobsServerFarmName')]",
+         "type": "Microsoft.Web/serverfarms",
+         "location": "[resourceGroup().location]",
+         "apiVersion": "2015-08-01",
+         "sku": {
+            "name": "[parameters('TaillePlanHeliosJobs')]"
+         },
+         "tags": {
+            "displayName": "HeliosWebJob"
+         },
+         "properties": {
+            "name": "[parameters('AzureWebJobsServerFarmName')]",
+            "numberOfWorkers": "[parameters('NbInstanceInitialHeliosWebJobs')]"
+         }
+      },
+      {
+         "name": "[parameters('AzureNotificationServerFarmName')]",
+         "type": "Microsoft.Web/serverfarms",
+         "location": "[resourceGroup().location]",
+         "apiVersion": "2015-08-01",
+         "sku": {
+            "name": "[parameters('TaillePlanHeliosNotification')]"
+         },
+         "tags": {
+            "displayName": "HeliosNotification"
+         },
+         "properties": {
+            "name": "[parameters('AzureNotificationServerFarmName')]",
+            "numberOfWorkers": "[parameters('NbInstanceInitialHeliosNotification')]"
+         }
+      },
+      {
+         "name": "[variables('CertificatGricsName')]",
+         "type": "Microsoft.Web/certificates",
+         "apiVersion": "2016-03-01",
+         "location": "[resourceGroup().location]",
+         "properties": {
+            "pfxBlob": "[parameters('PfxCertificate')]",
+            "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', parameters('AzureHeliosServerFarmName'))]"
+         },
+         "dependsOn": [
+            "[resourceId('Microsoft.Web/serverfarms', parameters('AzureHeliosServerFarmName'))]"
+         ]
+      },
+      {
+         "name": "[concat('helios-', parameters('HeliosEnvironnementName'), '-autoscale')]",
+         "type": "Microsoft.Insights/autoscalesettings",
+         "location": "[resourceGroup().location]",
+         "apiVersion": "2014-04-01",
+         "dependsOn": [
+            "[resourceId('Microsoft.Web/serverfarms', parameters('AzureHeliosServerFarmName'))]"
+         ],
+         "tags": {
+            "displayName": "AutoScale"
+         },
+         "properties": {
+            "profiles": [
+               {
+                  "name": "Default",
+                  "capacity": {
+                     "minimum": "[parameters('NbInstanceInitialHeliosWeb')]",
+                     "maximum": 10,
+                     "default": "[parameters('NbInstanceInitialHeliosWeb')]"
+                  },
+                  "rules": [
+                     {
+                        "metricTrigger": {
+                           "metricName": "CpuPercentage",
+                           "metricNamespace": "",
+                           "metricResourceUri": "[resourceId('Microsoft.Web/serverfarms', parameters('AzureHeliosServerFarmName'))]",
+                           "timeGrain": "PT5M",
+                           "statistic": "Average",
+                           "timeWindow": "PT10M",
+                           "timeAggregation": "Average",
+                           "operator": "GreaterThanOrEqual",
+                           "threshold": 65
+                        },
+                        "scaleAction": {
+                           "direction": "Increase",
+                           "type": "ChangeCount",
+                           "value": 1,
+                           "cooldown": "PT20M"
+                        }
+                     },
+                     {
+                        "metricTrigger": {
+                           "metricName": "CpuPercentage",
+                           "metricNamespace": "",
+                           "metricResourceUri": "[resourceId('Microsoft.Web/serverfarms', parameters('AzureHeliosServerFarmName'))]",
+                           "timeGrain": "PT5M",
+                           "statistic": "Average",
+                           "timeWindow": "PT10M",
+                           "timeAggregation": "Average",
+                           "operator": "LessThan",
+                           "threshold": 20
+                        },
+                        "scaleAction": {
+                           "direction": "Decrease",
+                           "type": "ChangeCount",
+                           "value": 1,
+                           "cooldown": "PT20M"
+                        }
+                     }
+                  ]
+               }
+            ],
+            "enabled": true,
+            "name": "[concat('helios-', parameters('HeliosEnvironnementName'), '-autoscale')]",
+            "targetResourceUri": "[resourceId('Microsoft.Web/serverfarms', parameters('AzureHeliosServerFarmName'))]",
+            "notifications": [
+               {
+                  "operation": "Scale",
+                  "email": {
+                     "sendToSubscriptionAdministrator": false,
+                     "sendToSubscriptionCoAdministrators": false,
+                     "customEmails": [
+                        "[parameters('EmailContact')]"
+                     ]
+                  }
+               }
+            ]
+         }
+      },
+      {
+         "name": "[concat('helios-', parameters('HeliosEnvironnementName'),'Notification', '-autoscale')]",
+         "type": "Microsoft.Insights/autoscalesettings",
+         "location": "[resourceGroup().location]",
+         "apiVersion": "2014-04-01",
+         "dependsOn": [
+            "[resourceId('Microsoft.Web/serverfarms', parameters('AzureNotificationServerFarmName'))]"
+         ],
+         "tags": {
+            "displayName": "AutoScale"
+         },
+         "properties": {
+            "profiles": [
+               {
+                  "name": "Default",
+                  "capacity": {
+                     "minimum": "[parameters('NbInstanceInitialHeliosNotification')]",
+                     "maximum": 4,
+                     "default": "[parameters('NbInstanceInitialHeliosNotification')]"
+                  },
+                  "rules": [
+                     {
+                        "metricTrigger": {
+                           "metricName": "CpuPercentage",
+                           "metricNamespace": "",
+                           "metricResourceUri": "[resourceId('Microsoft.Web/serverfarms', parameters('AzureNotificationServerFarmName'))]",
+                           "timeGrain": "PT5M",
+                           "statistic": "Average",
+                           "timeWindow": "PT10M",
+                           "timeAggregation": "Average",
+                           "operator": "GreaterThanOrEqual",
+                           "threshold": 65
+                        },
+                        "scaleAction": {
+                           "direction": "Increase",
+                           "type": "ChangeCount",
+                           "value": 1,
+                           "cooldown": "PT20M"
+                        }
+                     },
+                     {
+                        "metricTrigger": {
+                           "metricName": "CpuPercentage",
+                           "metricNamespace": "",
+                           "metricResourceUri": "[resourceId('Microsoft.Web/serverfarms', parameters('AzureNotificationServerFarmName'))]",
+                           "timeGrain": "PT5M",
+                           "statistic": "Average",
+                           "timeWindow": "PT10M",
+                           "timeAggregation": "Average",
+                           "operator": "LessThan",
+                           "threshold": 20
+                        },
+                        "scaleAction": {
+                           "direction": "Decrease",
+                           "type": "ChangeCount",
+                           "value": 1,
+                           "cooldown": "PT20M"
+                        }
+                     }
+                  ]
+               }
+            ],
+            "enabled": true,
+            "name": "[concat('helios-', parameters('HeliosEnvironnementName'),'Notification', '-autoscale')]",
+            "targetResourceUri": "[resourceId('Microsoft.Web/serverfarms', parameters('AzureNotificationServerFarmName'))]",
+            "notifications": [
+               {
+                  "operation": "Scale",
+                  "email": {
+                     "sendToSubscriptionAdministrator": false,
+                     "sendToSubscriptionCoAdministrators": false,
+                     "customEmails": [
+                        "[parameters('EmailContact')]"
+                     ]
+                  }
+               }
+            ]
+         }
+      }
+   ],
+   "outputs": {
+      "CertificatGricsName": {
+         "type": "string",
+         "value": "[variables('CertificatGricsName')]"
+      }
+   }
+}
