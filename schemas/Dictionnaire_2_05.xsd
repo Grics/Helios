@@ -1,0 +1,373 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+  <xs:complexType name="stringAvecAttributs">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+			<xs:attribute name="Donnee" type="xs:string"/>
+			<xs:attribute name="Type" type="xs:string"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:element name="Dictionnaire">
+    <xs:complexType>
+      <xs:all>
+        <xs:element ref="Version" />
+        <xs:element ref="DetailFacture" />
+        <xs:element ref="Tarifs" />
+      </xs:all>
+    </xs:complexType>
+  </xs:element>
+	
+  <xs:element name="Version" type="xs:string">
+    <xs:annotation>
+      <xs:documentation>Version du fichier xml du fournisseur pour la récupération</xs:documentation>
+    </xs:annotation>
+  </xs:element>      
+  <xs:element name="DetailFacture">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" name="SectionFacture">
+          <xs:complexType>
+            <xs:all>
+              <xs:element name="Valeur" type="xs:string">
+                <xs:annotation>
+                  <xs:documentation>Nom de la section trait?e</xs:documentation>
+                </xs:annotation>
+              </xs:element>
+              <xs:element name="AConserver" type="xs:boolean">
+                <xs:annotation>
+                  <xs:documentation>Si cette section sert ? plusieurs factures</xs:documentation>
+                </xs:annotation>
+              </xs:element>
+              <xs:element name="AnalyserResultat">
+                <xs:annotation>
+                  <xs:documentation>Sur plusieurs sections trait?es  utiliser la section Analyses pour d?finir comment contruire un noeud unique ** Ne doit pas s'appliquer sur une section a conserver </xs:documentation>
+                </xs:annotation>
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:enumeration value="Complete" />
+                    <xs:enumeration value="Conditionnelle" />
+                    <xs:enumeration value="Partielle" />
+                    <xs:enumeration value="Aucune" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+            </xs:all>
+          </xs:complexType>
+        </xs:element>
+        <xs:element minOccurs="0" maxOccurs="unbounded" name="SectionAnalyse">
+          <xs:annotation>
+            <xs:documentation>Pour chaque SectionFacture qui demande une analyse, permet de d?crire quoi faire avec chacune des donn?es incluses</xs:documentation>
+          </xs:annotation>
+          <xs:complexType>
+            <xs:sequence maxOccurs="unbounded">
+              <xs:element name="Donnee">
+                <xs:complexType>
+                  <xs:attribute name="Nom" type="xs:string" use="required" />
+                  <xs:attribute name="Type" type="xs:string" />
+                  <xs:attribute name="Action" use="required">
+                    <xs:simpleType>
+                      <xs:restriction base="xs:string">
+                        <xs:enumeration value="Cumuler" />
+                        <xs:enumeration value="CumulerConditionnellement" />
+                        <xs:enumeration value="Minimum" />
+                        <xs:enumeration value="Maximum" />
+                        <xs:enumeration value="Premiere" />
+                        <xs:enumeration value="Dependante" />
+                        <xs:enumeration value="Ignorer" />
+                        <xs:enumeration value="Condition" />
+                      </xs:restriction>
+                    </xs:simpleType>
+                  </xs:attribute>
+                  <xs:attribute name="SectionCondition">
+                    <xs:annotation>
+                      <xs:documentation>Si Action est Dependante. La section condition sera ?valu? pour prendre la plus grande valeur</xs:documentation>
+                    </xs:annotation>
+                  </xs:attribute>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+            <xs:attribute name="Nom" type="xs:string" use="required" />
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Tarifs">
+    <xs:complexType>
+      <xs:choice maxOccurs="unbounded">
+        <xs:element maxOccurs="unbounded" ref="Tarif" />
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Tarif">
+    <xs:complexType>
+      <xs:sequence maxOccurs="unbounded">
+        <xs:element ref="DetailTarif" />
+        <xs:element ref="Entete" />
+        <xs:element ref="Montants" />
+        <xs:element minOccurs="0" ref="Techniques" />
+      </xs:sequence>
+      <xs:attribute name="Code" type="Tarifs" use="required" />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Montants">
+    <xs:complexType>
+      <xs:choice maxOccurs="unbounded">
+        <xs:element name="Total" type="stringAvecAttributs" />
+        <xs:element name="TotalCumulatif" type="stringAvecAttributs" />
+        <xs:element ref="Montant" />
+        <xs:element ref="MontantCumulatif" />
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Entete">
+    <xs:complexType>
+      <xs:choice maxOccurs="unbounded">
+        <xs:element name="DateFacture" type="stringAvecAttributs" />
+        <xs:element name="DateDebut" type="stringAvecAttributs" />
+        <xs:element name="DateFin" type="stringAvecAttributs" />
+        <xs:element ref="Historique" />
+        <xs:element ref="Annulation" />
+        <xs:element name="DateEcheance" type="stringAvecAttributs" />
+        <xs:element name="Numero" type="stringAvecAttributs" />
+        <xs:element name="NumeroSerie" type="stringAvecAttributs" />
+        <xs:element name="NumeroCompte" type="stringAvecAttributs" />
+        <xs:element name="NumeroContrat" type="stringAvecAttributs" />
+        <xs:element name="FraisAutre" type="stringAvecAttributs" />
+        <xs:element name="FraisAdmin" type="stringAvecAttributs" />
+        <xs:element name="GrandTotal" type="stringAvecAttributs" />
+        <xs:element name="NombreJours" type="stringAvecAttributs" />
+        <xs:element name="Statut" type="stringAvecAttributs" />
+        <xs:element name="TypeFacture" type="stringAvecAttributs" />
+        <xs:element name="IndAjustement" type="stringAvecAttributs" />
+        <xs:element name="CodeTarif" type="stringAvecAttributs" />
+        <xs:element name="RabaisTransitoire">
+          <xs:complexType>
+            <xs:all>
+              <xs:element name="Valeur" type="xs:string" />
+              <xs:element name="Description" type="xs:string" />
+              <xs:element minOccurs="0" name="Masque" type="xs:string" />
+            </xs:all>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="DateChangementSerie" type="stringAvecAttributs" />
+        <xs:element name="InventaireEclairage" type="stringAvecAttributs" />
+        <xs:element name="NoDocumentCalcul" type="stringAvecAttributs" />
+        <xs:element name="NoDocumentCalculOriginal" type="stringAvecAttributs" />
+        <xs:element name="AnnulationGlobale" type="stringAvecAttributs" />
+        <xs:element name="CreditLoi34" type="stringAvecAttributs" />
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Techniques">
+    <xs:complexType>
+      <xs:choice maxOccurs="unbounded">
+        <xs:element ref="ElementTechnique" />
+        <xs:element ref="ElementContractuel" />
+      </xs:choice>
+      <xs:attribute name="DescrSectionTarif" type="xs:string" />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="DetailTarif">
+    <xs:complexType>
+      <xs:all>
+        <xs:element name="FormatDates" type="xs:string" />
+      </xs:all>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Historique">
+    <xs:complexType>
+      <xs:all>
+        <xs:element name="Parent" type="xs:string" />
+        <xs:element name="DateFin" type="xs:string" />
+        <xs:element name="DateDebut" type="xs:string" />
+        <xs:element name="NombreJours" type="xs:string" />
+        <xs:element name="Statut" type="xs:string" />
+      </xs:all>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Annulation">
+    <xs:complexType>
+      <xs:all>
+        <xs:element name="Valeur" type="xs:string" />
+        <xs:element name="Description" type="xs:string" />
+        <xs:element minOccurs="0" name="Masque" />
+      </xs:all>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ElementTechnique">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="Valeur" type="stringAvecAttributs" />
+        <xs:element name="Description" type="xs:string" />
+      </xs:sequence>
+      <xs:attribute name="Code" type="TypesElementTechnique" use="required" />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ElementContractuel">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="Description" type="xs:string" />
+        <xs:element name="Quantite" type="xs:string" />
+        <xs:element name="Taux" type="xs:string" />
+        <xs:element name="Montant" type="xs:string" />
+      </xs:sequence>
+      <xs:attribute name="Code" type="TypesElementContractuel" use="required" />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Montant">
+    <xs:complexType>
+      <xs:all>
+        <xs:element minOccurs="0" name="Section" type="xs:string" />
+        <xs:element minOccurs="0" name="SectionValeur" type="xs:string" />
+        <xs:element name="Valeur" type="stringAvecAttributs" />
+        <xs:element minOccurs="0" name="TagDescription" type="xs:string" />
+        <xs:element minOccurs="0" name="DescrValeur" type="xs:string" />
+        <xs:element minOccurs="0" name="Tps" type="stringAvecAttributs" />
+        <xs:element minOccurs="0" name="Tvq" type="stringAvecAttributs" />
+        <xs:element minOccurs="0" name="DescrTps" type="xs:string" />
+        <xs:element minOccurs="0" name="DescrTvq" type="xs:string" />
+        <xs:element minOccurs="0" name="TagDescription2" type="xs:string" />
+        <xs:element minOccurs="0" name="DescrTotal" type="xs:string" />
+        <xs:element minOccurs="0" name="ValeurTotal" type="xs:string" />
+        <xs:element minOccurs="0" name="DescriptionDetail" />
+      </xs:all>
+      <xs:attribute name="Code" type="TypesMontants" use="required" />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="MontantCumulatif">
+    <xs:complexType>
+      <xs:all>
+        <xs:element minOccurs="0" name="Section" type="xs:string" />
+        <xs:element minOccurs="0" name="SectionValeur" type="xs:string" />
+        <xs:element name="Valeur" type="stringAvecAttributs" />
+        <xs:element minOccurs="0" name="TagDescription" type="xs:string" />
+        <xs:element minOccurs="0" name="DescrValeur" type="xs:string" />
+        <xs:element minOccurs="0" name="Tps" type="stringAvecAttributs" />
+        <xs:element minOccurs="0" name="Tvq" type="stringAvecAttributs" />
+        <xs:element minOccurs="0" name="DescrTps" type="xs:string" />
+        <xs:element minOccurs="0" name="DescrTvq" type="xs:string" />
+        <xs:element minOccurs="0" name="TagDescription2" type="xs:string" />
+        <xs:element minOccurs="0" name="DescrTotal" type="xs:string" />
+        <xs:element minOccurs="0" name="ValeurTotal" type="xs:string" />
+        <xs:element minOccurs="0" name="DescriptionDetail" />
+      </xs:all>
+      <xs:attribute name="Code" type="TypesMontants" use="required" />
+    </xs:complexType>
+  </xs:element>
+  <xs:simpleType name="TypesMontants">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Energie" />
+      <xs:enumeration value="TotalFrais" />
+      <xs:enumeration value="SousTotal" />
+      <xs:enumeration value="Total" />
+      <xs:enumeration value="FraisAdmin" />
+      <xs:enumeration value="FraisCredit" />
+      <xs:enumeration value="FraisVisilec" />
+      <xs:enumeration value="FraisGestion" />
+      <xs:enumeration value="AutresFrais" />
+      <xs:enumeration value="FraisBranchAerien" />
+      <xs:enumeration value="FraisRaccordPerm" />
+      <xs:enumeration value="FraisRemise" />
+      <xs:enumeration value="AjustementFinAnnee" />
+      <xs:enumeration value="FraisMigration" />
+      <xs:enumeration value="CoutKwh" />
+      <xs:enumeration value="CoutKwh1E" />
+      <xs:enumeration value="CoutRedev" />
+      <xs:enumeration value="CoutPuissFact" />
+      <xs:enumeration value="CoutPuissFactExcedent" />
+      <xs:enumeration value="CoutKwh2E" />
+      <xs:enumeration value="CoutDepasse" />
+      <xs:enumeration value="CoutMinAlimPolyphase" />
+      <xs:enumeration value="CoutMinAlimMonophase" />
+      <xs:enumeration value="CoutRedev" />
+      <xs:enumeration value="CoutLuminaire" />
+      <xs:enumeration value="CoutLocPoteau" />
+      <xs:enumeration value="TransfertCompte" />
+      <xs:enumeration value="ObligationMinimaleAnnuelle" />
+      <xs:enumeration value="ObligationMinimaleAnnuelleSansTaxe" />
+      <xs:enumeration value="ContributionRaccordement" />
+      <xs:enumeration value="AjustementInventaire" />
+      <xs:enumeration value="SoldeInventaireFourniture" />
+      <xs:enumeration value="FraisAbonnement" />
+      <xs:enumeration value="PrimeMauvaisFacteurPuissance" />
+      <xs:enumeration value="CoutAccesReseau" />
+      <xs:enumeration value="CoutConsommationGazAppoint" />
+      <xs:enumeration value="CoutAchatGazAppoint" />
+      <xs:enumeration value="CoutKwh3E" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="Tarifs">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="01DJ" />
+      <xs:enumeration value="01LI" />
+      <xs:enumeration value="D1" />
+      <xs:enumeration value="D3" />
+      <xs:enumeration value="D4" />
+      <xs:enumeration value="D5" />
+      <xs:enumeration value="DM" />
+      <xs:enumeration value="D" />
+      <xs:enumeration value="G" />
+      <xs:enumeration value="G9" />
+      <xs:enumeration value="M" />
+      <xs:enumeration value="T3" />
+      <xs:enumeration value="EVP" />
+      <xs:enumeration value="ECM" />
+      <xs:enumeration value="03-05" />
+      <xs:enumeration value="BR" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="TypesElementTechnique">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Consommation" />
+      <xs:enumeration value="TauxFourniture" />
+      <xs:enumeration value="TauxGazCompression" />
+      <xs:enumeration value="TauxTransport" />
+      <xs:enumeration value="TauxEquilibrage" />
+      <xs:enumeration value="TauxInventaire" />
+      <xs:enumeration value="PuissanceReele" />
+      <xs:enumeration value="PuissanceApparente" />
+      <xs:enumeration value="PuissanceMinimale" />
+      <xs:enumeration value="PuissanceSouscrite" />
+      <xs:enumeration value="FacteurPuissance" />
+      <xs:enumeration value="FacteurUtilisation" />
+      <xs:enumeration value="PuissanceInstallee" />
+      <xs:enumeration value="NbrLuminaires" />
+      <xs:enumeration value="CoutLuminaires" />
+      <xs:enumeration value="GenreLuminaire" />
+      <xs:enumeration value="NbrPoteaux" />
+      <xs:enumeration value="CoutPoteaux" />
+      <xs:enumeration value="NbrCircuits" />
+      <xs:enumeration value="CoutCircuits" />
+      <xs:enumeration value="NbrHeurUtilisation" />
+      <xs:enumeration value="PrixSpede" />
+      <xs:enumeration value="VolumeGazRenouvelable" />
+      <xs:enumeration value="PrixGazRenouvelable" />
+      <xs:enumeration value="NbrJoursInventaire" />
+      <xs:enumeration value="WattageTotal" />
+      <xs:enumeration value="PuissanceReelleDeduite" />
+      <xs:enumeration value="PuissanceAFacturer" />
+      <xs:enumeration value="NombreLogements" />
+      <xs:enumeration value="AchatGazAppoint" />
+      <xs:enumeration value="ConsommationGazAppoint" />
+      <xs:enumeration value="ConsommationD3" />
+      <xs:enumeration value="ConsommationD5" />
+      <xs:enumeration value="ConsommationD1" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="TypesElementContractuel">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="ObligationMinimaleQuotidienne" />
+      <xs:enumeration value="ObligationMinimaleAnnuelle" />
+      <xs:enumeration value="ObligationMinimaleAnnuelleStable" />
+      <xs:enumeration value="ObligationMinimaleAnnuelleInterruptible" />
+      <xs:enumeration value="TermeContrat" />
+      <xs:enumeration value="FacteurUtilisation" />
+      <xs:enumeration value="Excedent" />
+      <xs:enumeration value="RetraitsInterdits" />
+    </xs:restriction>
+  </xs:simpleType>
+</xs:schema>
