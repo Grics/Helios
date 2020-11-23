@@ -72,6 +72,7 @@
                   "RedisSessionKey": "[listKeys(resourceId('Microsoft.Cache/Redis', parameters('AzureRedisName')), '2015-08-01').primaryKey]",
                   "RedisSessionDbId": "[parameters('RedisSessionDatabaseId')]",
                   "RedisTimeout": "15000",
+                  "RedisRetry": "5",
                   "UnityConfigReader": "OozmaKappa.Unity.Configuration.UnityConfigReaderDataPath",
                   "ContainerConnectionString": "[parameters('connectionString')]",
                   "DateDebutRecuperation": "1998-01-01",
