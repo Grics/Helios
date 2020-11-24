@@ -11,6 +11,7 @@
       "AzureTelemetryName": { "type": "string" },
       "AzureRedisName": { "type": "string" },
       "RedisDatabaseId": { "type": "int" },
+      "RedisSessionDatabaseId": { "type": "int" },
       "AzureWebAppMeteoName": { "type": "string" },
       "AzureServiceCalculName": { "type": "string" },
       "serviceNotificationConnectionString": { "type": "string" },
