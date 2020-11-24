@@ -5,6 +5,8 @@
       "HeliosEnvironnementName": { "type": "string" },
       "heliosSqlLogin": { "type": "string" },
       "AzureRedisName": { "type": "string" },
+      "RedisDatabaseId": { "type": "int" },
+      "RedisSessionDatabaseId": { "type": "int" },      
       "AzureTelemetryName": { "type": "string" },
       "AzureSqlServerName": { "type": "string" },
       "AzureHeliosServerFarmName": { "type": "string" },
