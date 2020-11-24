@@ -7,6 +7,7 @@
       "HeliosAdresseWebsite": { "type": "string" },
       "AzureRedisName": { "type": "string" },
       "RedisDatabaseId": { "type": "int" },
+      "RedisSessionDatabaseId": { "type": "int" },      
       "AzureTelemetryName": { "type": "string" },
       "AzureSqlServerName": { "type": "string" },
       "AzureServiceCalculName": { "type": "string" },
