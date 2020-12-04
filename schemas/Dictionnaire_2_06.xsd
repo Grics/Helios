@@ -356,7 +356,7 @@
       <xs:enumeration value="ConsommationD3" />
       <xs:enumeration value="ConsommationD5" />
       <xs:enumeration value="ConsommationD1" />
-      <xs:enumeration value="ConsommationFixe" />
+      <xs:enumeration value="ConsommationPrixFixe" />
       <xs:enumeration value="TauxFournitureFixe" />
     </xs:restriction>
   </xs:simpleType>
