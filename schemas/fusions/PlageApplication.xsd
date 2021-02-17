@@ -143,13 +143,9 @@
          <xs:enumeration value="DM"/>
          <xs:enumeration value="G" />
          <xs:enumeration value="G9" />
-         <xs:enumeration value="BT"/>
          <xs:enumeration value="M"/>
          <xs:enumeration value="L"/>
          <xs:enumeration value="LG"/>
-         <xs:enumeration value="T3"/>
-         <xs:enumeration value="ECM"/>
-         <xs:enumeration value="EVP"/>
          <xs:enumeration value="D1"/>
          <xs:enumeration value="D3"/>
          <xs:enumeration value="D4"/>
