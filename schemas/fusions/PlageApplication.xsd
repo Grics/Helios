@@ -1,157 +1,151 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
-   <xs:element name="fournisseur">
-      <xs:annotation>
-         <xs:documentation>Définition de plage d'application pour un tarif</xs:documentation>
-      </xs:annotation>
-      <xs:complexType>
-         <xs:sequence minOccurs="1" maxOccurs="unbounded">
-            <!-- LA CATÉGORIE DE TARIF -->
-            <xs:element name ="categorieTarif">
-               <xs:complexType>
-                  <xs:sequence minOccurs="1" maxOccurs="unbounded">
-
-                     <!-- LES TARIFS DE CETTE CATÉGORIE -->
-                     <xs:element name="tarif">
-                        <xs:complexType>
-                           <xs:choice minOccurs="0" maxOccurs="unbounded">
-                              <!-- LES PLAGES D'APPLICATIONS -->
-
-                              <!-- UN INTERVALLE DE VALEUR POSSIBLE -->
-                              <xs:element name="Intervalle">
-                                 <xs:complexType>
-                                    <xs:sequence>
-                                       <xs:element name="Minimum" minOccurs="1" maxOccurs="1">
-                                          <xs:complexType>
-                                             <xs:attribute name="valeur" type="xs:double" use="required"/>
-                                          </xs:complexType>
-                                       </xs:element>
-                                       <xs:element name="Maximum" minOccurs="0" maxOccurs="1">
-                                          <xs:complexType>
-                                             <xs:attribute name="valeur" type="xs:double" use="required"/>
-                                          </xs:complexType>
-                                       </xs:element>
-                                    </xs:sequence>
-                                    <xs:attribute name="typeElement" type="TypeElement" use="required"/>
-                                    <xs:attribute name="TypeElementSubstitut" type="TypeElement" use="optional"/>
-                                 </xs:complexType>
-                              </xs:element>
-
-                              <!-- UN ÉVÉNEMENT QUI ARRIVE AU MOINS UNE FOIS PAR ANNÉE -->
-                              <xs:element name="OccurenceAnuelle">
-                                 <xs:complexType>
-                                    <xs:all minOccurs="1">
-                                       <xs:element ref="Minimum" minOccurs="0" maxOccurs="1" />
-                                       <xs:element ref="Maximum" minOccurs="0" maxOccurs="1" />
-                                    </xs:all>
-                                    <xs:attribute name="typeElement" type="TypeElement" use="required"/>
-                                    <xs:attribute name="TypeElementSubstitut" type="TypeElement" use="optional"/>
-                                 </xs:complexType>
-                              </xs:element>
-
-                              <!-- CONSOMMATION MINIMALE PAR JOUR (UTILISÉ POUR GM) -->
-                              <xs:element name="ConsommationJournaliereMinimale">
-                                 <xs:complexType>
-                                    <xs:all minOccurs="1">
-                                       <xs:element name="ConsommationJournaliere">
-                                          <xs:complexType>
-                                             <xs:attribute name="valeur" use="required" type="xs:double"/>
-                                          </xs:complexType>
-                                       </xs:element>
-                                       <xs:element name="Pourcentage">
-                                          <xs:complexType>
-                                             <xs:attribute name="valeur" use="required" type="xs:double"/>
-                                          </xs:complexType>
-                                       </xs:element>
-                                    </xs:all>
-                                    <xs:attribute name="typeElement" type="TypeElement" use="required"/>
-                                    <xs:attribute name="TypeElementSubstitut" type="TypeElement" use="optional"/>
-                                 </xs:complexType>
-                              </xs:element>
-
-                           </xs:choice>
-                           <xs:attribute name="codeTarif" type="CodeTarif" use="required"/>
-                        </xs:complexType>
-                     </xs:element>
-
-                  </xs:sequence>
-                  <xs:attribute name="categorie" type="CategorieTarif" use="required"/>
-               </xs:complexType>
-            </xs:element>
-
-         </xs:sequence>
-         <xs:attribute name="codeFournisseur" type="CodeFournisseur" use="required"/>
-      </xs:complexType>
-   </xs:element>
-
-   <!-- ÉNUMÉRATiON DES CATÉGORIES DE TARIFS -->
-   <xs:simpleType name="CategorieTarif">
-      <xs:restriction base="xs:string">
-         <xs:enumeration value="Commercial"/>
-         <xs:enumeration value="Domestique"/>
-         <xs:enumeration value="Eclairage"/>
-      </xs:restriction>
-   </xs:simpleType>
-
-   <xs:element name="typeBorne" abstract="true"/>
-   <xs:element name="Minimum" substitutionGroup="typeBorne">
-      <xs:complexType>
-         <xs:attribute name="valeur" type="xs:double" use="required"/>
-      </xs:complexType>
-   </xs:element>
-   <xs:element name="Maximum" substitutionGroup="typeBorne">
-      <xs:complexType>
-         <xs:attribute name="valeur" type="xs:double" use="required"/>
-      </xs:complexType>
-   </xs:element>
-
-   <!-- ÉNUMÉRATION DES TYPES DE BORNES -->
-   <xs:simpleType name="TypeBorne">
-      <xs:restriction base="xs:string">
-         <xs:enumeration value="Minimum"/>
-         <xs:enumeration value="Maximum"/>
-      </xs:restriction>
-   </xs:simpleType>
-
-   <!-- ÉNUMÉRATION DES TYPES D'ÉLÉMENTS SUR LESQUELS LES PLAGES S'APPLIQUENT-->
-   <xs:simpleType name="TypeElement">
-      <xs:restriction base="xs:string">
-         <xs:enumeration value="NbLogements"/>
-         <xs:enumeration value="PuissanceAppelee"/>
-         <xs:enumeration value="PuissanceMinimale"/>
-         <xs:enumeration value="FacteurUtilisation"/>
-         <xs:enumeration value="PuissanceSouscrite"/>
-         <xs:enumeration value="Consommation"/>
-         <xs:enumeration value="ConsommationAnnuelle"/>
-         <xs:enumeration value="VolumeJournalierSouscrit"/>
-      </xs:restriction>
-   </xs:simpleType>
-
-   <!-- ÉNUMÉRATION DES CODES DE FOURNISSEURS DISPONIBLE -->
-   <xs:simpleType name="CodeFournisseur">
-      <xs:restriction base ="xs:string">
-         <xs:enumeration value="HQ"/>
-         <xs:enumeration value="GM"/>
-         <xs:enumeration value="GF"/>
-      </xs:restriction>
-   </xs:simpleType>
-
-   <!-- ÉNUMÉRATION DES TARIFS DISPONIBLE -->
-   <xs:simpleType name="CodeTarif">
-      <xs:restriction base="xs:string">
-         <xs:enumeration value="D"/>
-         <xs:enumeration value="DM"/>
-         <xs:enumeration value="G" />
-         <xs:enumeration value="G9" />
-         <xs:enumeration value="M"/>
-         <xs:enumeration value="L"/>
-         <xs:enumeration value="LG"/>
-         <xs:enumeration value="D1"/>
-         <xs:enumeration value="D3"/>
-         <xs:enumeration value="D4"/>
-         <xs:enumeration value="D5"/>
-         <xs:enumeration value="1"/>
-         <xs:enumeration value="2"/>
-      </xs:restriction>
-   </xs:simpleType>
+	<xs:element name="fournisseur">
+		<xs:annotation>
+			<xs:documentation>Définition de plage d'application pour un tarif</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence maxOccurs="unbounded">
+				<!-- LA CATÉGORIE DE TARIF -->
+				<xs:element name="categorieTarif">
+					<xs:complexType>
+						<xs:sequence maxOccurs="unbounded">
+							<!-- LES TARIFS DE CETTE CATÉGORIE -->
+							<xs:element name="tarif">
+								<xs:complexType>
+									<xs:choice minOccurs="0" maxOccurs="unbounded">
+										<!-- LES PLAGES D'APPLICATIONS -->
+										<!-- UN INTERVALLE DE VALEUR POSSIBLE -->
+										<xs:element name="Intervalle">
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="Minimum">
+														<xs:complexType>
+															<xs:attribute name="valeur" type="xs:double" use="required"/>
+														</xs:complexType>
+													</xs:element>
+													<xs:element name="Maximum" minOccurs="0">
+														<xs:complexType>
+															<xs:attribute name="valeur" type="xs:double" use="required"/>
+														</xs:complexType>
+													</xs:element>
+												</xs:sequence>
+												<xs:attribute name="typeElement" type="TypeElement" use="required"/>
+												<xs:attribute name="TypeElementSubstitut" type="TypeElement" use="optional"/>
+											</xs:complexType>
+										</xs:element>
+										<!-- UN ÉVÉNEMENT QUI ARRIVE AU MOINS UNE FOIS PAR ANNÉE -->
+										<xs:element name="OccurenceAnuelle">
+											<xs:complexType>
+												<xs:all>
+													<xs:element ref="Minimum" minOccurs="0"/>
+													<xs:element ref="Maximum" minOccurs="0"/>
+												</xs:all>
+												<xs:attribute name="typeElement" type="TypeElement" use="required"/>
+												<xs:attribute name="TypeElementSubstitut" type="TypeElement" use="optional"/>
+											</xs:complexType>
+										</xs:element>
+										<!-- CONSOMMATION MINIMALE PAR JOUR (UTILISÉ POUR GM) -->
+										<xs:element name="ConsommationJournaliereMinimale">
+											<xs:complexType>
+												<xs:all>
+													<xs:element name="ConsommationJournaliere">
+														<xs:complexType>
+															<xs:attribute name="valeur" type="xs:double" use="required"/>
+														</xs:complexType>
+													</xs:element>
+													<xs:element name="Pourcentage">
+														<xs:complexType>
+															<xs:attribute name="valeur" type="xs:double" use="required"/>
+														</xs:complexType>
+													</xs:element>
+												</xs:all>
+												<xs:attribute name="typeElement" type="TypeElement" use="required"/>
+												<xs:attribute name="TypeElementSubstitut" type="TypeElement" use="optional"/>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="TarifsCiblesExclus">
+											<xs:complexType>
+												<xs:choice maxOccurs="unbounded">
+													<xs:element name="Code" type="xs:string"/>
+												</xs:choice>
+											</xs:complexType>
+										</xs:element>
+									</xs:choice>
+									<xs:attribute name="codeTarif" type="CodeTarif" use="required"/>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+						<xs:attribute name="categorie" type="CategorieTarif" use="required"/>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+			<xs:attribute name="codeFournisseur" type="CodeFournisseur" use="required"/>
+		</xs:complexType>
+	</xs:element>
+	<!-- ÉNUMÉRATiON DES CATÉGORIES DE TARIFS -->
+	<xs:simpleType name="CategorieTarif">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Commercial"/>
+			<xs:enumeration value="Domestique"/>
+			<xs:enumeration value="Eclairage"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:element name="typeBorne" abstract="true"/>
+	<xs:element name="Minimum" substitutionGroup="typeBorne">
+		<xs:complexType>
+			<xs:attribute name="valeur" type="xs:double" use="required"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="Maximum" substitutionGroup="typeBorne">
+		<xs:complexType>
+			<xs:attribute name="valeur" type="xs:double" use="required"/>
+		</xs:complexType>
+	</xs:element>
+	<!-- ÉNUMÉRATION DES TYPES DE BORNES -->
+	<xs:simpleType name="TypeBorne">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Minimum"/>
+			<xs:enumeration value="Maximum"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- ÉNUMÉRATION DES TYPES D'ÉLÉMENTS SUR LESQUELS LES PLAGES S'APPLIQUENT-->
+	<xs:simpleType name="TypeElement">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="NbLogements"/>
+			<xs:enumeration value="PuissanceAppelee"/>
+			<xs:enumeration value="PuissanceMinimale"/>
+			<xs:enumeration value="FacteurUtilisation"/>
+			<xs:enumeration value="PuissanceSouscrite"/>
+			<xs:enumeration value="Consommation"/>
+			<xs:enumeration value="ConsommationAnnuelle"/>
+			<xs:enumeration value="VolumeJournalierSouscrit"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- ÉNUMÉRATION DES CODES DE FOURNISSEURS DISPONIBLE -->
+	<xs:simpleType name="CodeFournisseur">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="HQ"/>
+			<xs:enumeration value="GM"/>
+			<xs:enumeration value="GF"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- ÉNUMÉRATION DES TARIFS DISPONIBLE -->
+	<xs:simpleType name="CodeTarif">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="D"/>
+			<xs:enumeration value="DM"/>
+			<xs:enumeration value="G"/>
+			<xs:enumeration value="G9"/>
+			<xs:enumeration value="M"/>
+			<xs:enumeration value="L"/>
+			<xs:enumeration value="LG"/>
+			<xs:enumeration value="D1"/>
+			<xs:enumeration value="D3"/>
+			<xs:enumeration value="D4"/>
+			<xs:enumeration value="D5"/>
+			<xs:enumeration value="1"/>
+			<xs:enumeration value="2"/>
+		</xs:restriction>
+	</xs:simpleType>
 </xs:schema>
