@@ -70,7 +70,7 @@
 												<xs:choice maxOccurs="unbounded">
 													<xs:element name="Code">
 														<xs:complexType>
-															<xs:attribute name="valeur" type="xs:string" use="required"/>
+															<xs:attribute name="valeur" type="CodeTarif" use="required"/>
 														</xs:complexType>
 													</xs:element>
 												</xs:choice>
