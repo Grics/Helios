@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- edited with XMLSpy v2009 sp1 (http://www.altova.com) by XMLSpy 2009 Enterprise Ed., Concurrent single user (SOCIETE GRICS) -->
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
 	<xs:element name="fournisseur">
 		<xs:annotation>
@@ -13,10 +14,10 @@
 							<!-- LES TARIFS DE CETTE CATÉGORIE -->
 							<xs:element name="tarif">
 								<xs:complexType>
-									<xs:choice minOccurs="0" maxOccurs="unbounded">
+									<xs:choice maxOccurs="unbounded">
 										<!-- LES PLAGES D'APPLICATIONS -->
 										<!-- UN INTERVALLE DE VALEUR POSSIBLE -->
-										<xs:element name="Intervalle">
+										<xs:element name="Intervalle" minOccurs="0">
 											<xs:complexType>
 												<xs:sequence>
 													<xs:element name="Minimum">
@@ -35,7 +36,7 @@
 											</xs:complexType>
 										</xs:element>
 										<!-- UN ÉVÉNEMENT QUI ARRIVE AU MOINS UNE FOIS PAR ANNÉE -->
-										<xs:element name="OccurenceAnuelle">
+										<xs:element name="OccurenceAnuelle" minOccurs="0">
 											<xs:complexType>
 												<xs:all>
 													<xs:element ref="Minimum" minOccurs="0"/>
@@ -46,7 +47,7 @@
 											</xs:complexType>
 										</xs:element>
 										<!-- CONSOMMATION MINIMALE PAR JOUR (UTILISÉ POUR GM) -->
-										<xs:element name="ConsommationJournaliereMinimale">
+										<xs:element name="ConsommationJournaliereMinimale" minOccurs="0">
 											<xs:complexType>
 												<xs:all>
 													<xs:element name="ConsommationJournaliere">
@@ -64,12 +65,15 @@
 												<xs:attribute name="TypeElementSubstitut" type="TypeElement" use="optional"/>
 											</xs:complexType>
 										</xs:element>
-										<xs:element name="TarifsCiblesExclus">
+										<xs:element name="TarifsCiblesExclus" minOccurs="0">
 											<xs:complexType>
 												<xs:choice maxOccurs="unbounded">
 													<xs:element name="Code" type="xs:string"/>
 												</xs:choice>
 											</xs:complexType>
+										</xs:element>
+										<xs:element name="Exlcus" minOccurs="0">
+											<xs:complexType/>
 										</xs:element>
 									</xs:choice>
 									<xs:attribute name="codeTarif" type="CodeTarif" use="required"/>
@@ -146,6 +150,10 @@
 			<xs:enumeration value="D5"/>
 			<xs:enumeration value="1"/>
 			<xs:enumeration value="2"/>
+			<xs:enumeration value="BT"/>
+			<xs:enumeration value="T3"/>	
+			<xs:enumeration value="ECM"/>	
+			<xs:enumeration value="EVP"/>
 		</xs:restriction>
 	</xs:simpleType>
 </xs:schema>
