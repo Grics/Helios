@@ -74,10 +74,13 @@
 														</xs:complexType>
 													</xs:element>
 												</xs:choice>
+												<xs:attribute name="typeElement" type="TypeElement" use="required" fixed="Autre"/>
 											</xs:complexType>
 										</xs:element>
 										<xs:element name="Exlcus" minOccurs="0">
-											<xs:complexType/>
+											<xs:complexType>
+												<xs:attribute name="typeElement" type="TypeElement" use="required" fixed="Autre"/>
+											</xs:complexType>
 										</xs:element>
 									</xs:choice>
 									<xs:attribute name="codeTarif" type="CodeTarif" use="required"/>
@@ -120,6 +123,7 @@
 	<!-- ÉNUMÉRATION DES TYPES D'ÉLÉMENTS SUR LESQUELS LES PLAGES S'APPLIQUENT-->
 	<xs:simpleType name="TypeElement">
 		<xs:restriction base="xs:string">
+			<xs:enumeration value="Autre"/>
 			<xs:enumeration value="NbLogements"/>
 			<xs:enumeration value="PuissanceAppelee"/>
 			<xs:enumeration value="PuissanceMinimale"/>
