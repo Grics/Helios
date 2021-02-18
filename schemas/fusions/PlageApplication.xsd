@@ -150,7 +150,6 @@
 			<xs:enumeration value="D5"/>
 			<xs:enumeration value="1"/>
 			<xs:enumeration value="2"/>
-			<xs:enumeration value="BT"/>
 			<xs:enumeration value="T3"/>	
 			<xs:enumeration value="ECM"/>	
 			<xs:enumeration value="EVP"/>
